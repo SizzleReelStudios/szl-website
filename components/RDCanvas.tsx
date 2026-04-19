@@ -6,7 +6,7 @@ const CHARS = [" ", "·", ".", ":", ";", "+", "x", "#"];
 const FONT_SIZE = 14;
 const DAMPING = 0.94;
 const MOUSE_RADIUS = 3;
-const FPS = 20;
+const FPS = 60;
 
 export default function RDCanvas() {
   const canvasRef = useRef<HTMLCanvasElement>(null);

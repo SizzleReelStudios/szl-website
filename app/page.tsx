@@ -19,20 +19,15 @@ export default function Home() {
       }}
     >
       <RDCanvas />
-      <p
+      <img
+        src="/szl-logo.gif"
+        alt="SZL"
         style={{
           position: "relative",
-          color: "#fff",
-          fontSize: "clamp(2rem, 8vw, 5rem)",
-          fontWeight: 700,
-          letterSpacing: "0.15em",
-          textTransform: "uppercase",
-          margin: 0,
+          width: "clamp(120px, 20vw, 240px)",
           zIndex: 1,
         }}
-      >
-        SZL
-      </p>
+      />
       <p
         style={{
           position: "relative",
