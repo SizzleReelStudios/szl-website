@@ -4,8 +4,9 @@ import { useEffect, useRef } from "react";
 
 const CHARS = [" ", "·", ".", ":", ";", "+", "x", "#"];
 const FONT_SIZE = 14;
-const DAMPING = 0.985;
+const DAMPING = 0.94;
 const MOUSE_RADIUS = 3;
+const FPS = 20;
 
 export default function RDCanvas() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -54,7 +55,7 @@ export default function RDCanvas() {
       mouseX = cx;
       mouseY = cy;
 
-      const strength = mouseVel * 0.15;
+      const strength = mouseVel * 0.07;
       for (let dy2 = -MOUSE_RADIUS; dy2 <= MOUSE_RADIUS; dy2++) {
         for (let dx2 = -MOUSE_RADIUS; dx2 <= MOUSE_RADIUS; dx2++) {
           const dist = Math.sqrt(dx2 * dx2 + dy2 * dy2);
@@ -70,8 +71,12 @@ export default function RDCanvas() {
     window.addEventListener("mousemove", onMouseMove);
 
     let raf: number;
+    let lastTime = 0;
+    const interval = 1000 / FPS;
 
-    const step = () => {
+    const step = (now: number) => {
+      if (now - lastTime < interval) { raf = requestAnimationFrame(step); return; }
+      lastTime = now;
       C = cols();
       R = rows();
 
@@ -121,6 +126,7 @@ export default function RDCanvas() {
     };
 
     raf = requestAnimationFrame(step);
+
 
     return () => {
       cancelAnimationFrame(raf);
