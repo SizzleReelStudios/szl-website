@@ -72,7 +72,7 @@ export default function RDCanvas() {
 
       const d = imageData.data;
       for (let i = 0; i < size; i++) {
-        const v = Math.floor((1 - B[i]) * 255);
+        const v = Math.floor(B[i] * 180);
         d[i * 4] = v;
         d[i * 4 + 1] = v;
         d[i * 4 + 2] = v;
@@ -95,7 +95,7 @@ export default function RDCanvas() {
         width: "100%",
         height: "100%",
         imageRendering: "pixelated",
-        opacity: 0.35,
+        opacity: 0.5,
       }}
     />
   );
