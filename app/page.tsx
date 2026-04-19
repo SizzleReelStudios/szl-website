@@ -43,7 +43,7 @@ export default function Home() {
           bottom: "32px",
           left: "50%",
           transform: "translateX(-50%)",
-          color: "#555",
+          color: "#999",
           transition: "color 0.2s",
         }}
         onMouseEnter={e => (e.currentTarget.style.color = "#fff")}
