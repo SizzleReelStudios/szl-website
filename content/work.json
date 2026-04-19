@@ -1,0 +1,16 @@
+{
+  "items": [
+    {
+      "id": "placeholder-1",
+      "title": "",
+      "type": "video",
+      "embedUrl": "",
+      "thumbnail": "",
+      "client": "",
+      "date": "",
+      "tags": []
+    }
+  ],
+  "last_updated": "2026-04-19",
+  "note": "Populate with real project embeds. Each item needs title, type (video/image), embedUrl or thumbnail, client, date, tags."
+}

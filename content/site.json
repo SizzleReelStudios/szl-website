@@ -1,0 +1,26 @@
+{
+  "meta": {
+    "title": "SZL",
+    "description": "Perth-based creative unit. We capture the night.",
+    "url": "https://szl.au"
+  },
+  "nav": {
+    "wordmark": "SZL",
+    "links": [
+      { "label": "Work", "href": "#work" },
+      { "label": "Who We Are", "href": "#about" },
+      { "label": "Contact", "href": "#contact" }
+    ]
+  },
+  "hero": {
+    "tagline": "We film the night how it actually feels.",
+    "sub": "In the crowd. On the decks. Behind the scenes.",
+    "videoUrl": "",
+    "posterUrl": ""
+  },
+  "contact": {
+    "instagram": "https://www.instagram.com/sizzlereelstudios",
+    "email": "hello@szl.au"
+  },
+  "last_updated": "2026-04-19"
+}
