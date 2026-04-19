@@ -2,12 +2,10 @@
 
 import { useEffect, useRef } from "react";
 
-const F = 0.0545;
-const K = 0.062;
-const DA = 1.0;
-const DB = 0.5;
-const DT = 1.0;
-const STEPS_PER_FRAME = 8;
+const CHARS = [" ", "·", ".", ":", ";", "+", "x", "#"];
+const FONT_SIZE = 14;
+const DAMPING = 0.985;
+const MOUSE_RADIUS = 3;
 
 export default function RDCanvas() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -16,74 +14,115 @@ export default function RDCanvas() {
     const canvas = canvasRef.current;
     if (!canvas) return;
 
-    const W = Math.floor(window.innerWidth / 2);
-    const H = Math.floor(window.innerHeight / 2);
-    canvas.width = W;
-    canvas.height = H;
+    const resize = () => {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    };
+    resize();
+    window.addEventListener("resize", resize);
 
     const ctx = canvas.getContext("2d")!;
-    const size = W * H;
+    ctx.font = `${FONT_SIZE}px monospace`;
+    ctx.textBaseline = "top";
 
-    let A = new Float32Array(size).fill(1);
-    let B = new Float32Array(size).fill(0);
-    let nextA = new Float32Array(size);
-    let nextB = new Float32Array(size);
+    const cols = () => Math.floor(canvas.width / (FONT_SIZE * 0.6));
+    const rows = () => Math.floor(canvas.height / FONT_SIZE);
 
-    // seed a few spots
-    const seed = (x: number, y: number, r: number) => {
-      for (let dy = -r; dy <= r; dy++) {
-        for (let dx = -r; dx <= r; dx++) {
-          if (dx * dx + dy * dy <= r * r) {
-            const idx = (y + dy) * W + (x + dx);
-            if (idx >= 0 && idx < size) B[idx] = 1;
-          }
+    let C = cols();
+    let R = rows();
+    let cur = new Float32Array(C * R);
+    let prev = new Float32Array(C * R);
+
+    let mouseX = -1;
+    let mouseY = -1;
+    let mouseVel = 0;
+    let lastMouseX = -1;
+    let lastMouseY = -1;
+
+    const onMouseMove = (e: MouseEvent) => {
+      const cellW = canvas.width / C;
+      const cellH = canvas.height / R;
+      const cx = Math.floor(e.clientX / cellW);
+      const cy = Math.floor(e.clientY / cellH);
+
+      const dx = e.clientX - (lastMouseX < 0 ? e.clientX : lastMouseX);
+      const dy = e.clientY - (lastMouseY < 0 ? e.clientY : lastMouseY);
+      mouseVel = Math.min(Math.sqrt(dx * dx + dy * dy), 40);
+
+      lastMouseX = e.clientX;
+      lastMouseY = e.clientY;
+      mouseX = cx;
+      mouseY = cy;
+
+      const strength = mouseVel * 0.15;
+      for (let dy2 = -MOUSE_RADIUS; dy2 <= MOUSE_RADIUS; dy2++) {
+        for (let dx2 = -MOUSE_RADIUS; dx2 <= MOUSE_RADIUS; dx2++) {
+          const dist = Math.sqrt(dx2 * dx2 + dy2 * dy2);
+          if (dist > MOUSE_RADIUS) continue;
+          const nx = cx + dx2;
+          const ny = cy + dy2;
+          if (nx < 0 || nx >= C || ny < 0 || ny >= R) continue;
+          prev[ny * C + nx] += strength * (1 - dist / MOUSE_RADIUS);
         }
       }
     };
-    seed(Math.floor(W * 0.5), Math.floor(H * 0.5), 6);
-    seed(Math.floor(W * 0.3), Math.floor(H * 0.3), 4);
-    seed(Math.floor(W * 0.7), Math.floor(H * 0.6), 5);
 
-    const imageData = ctx.createImageData(W, H);
+    window.addEventListener("mousemove", onMouseMove);
 
     let raf: number;
 
-    function step() {
-      for (let s = 0; s < STEPS_PER_FRAME; s++) {
-        for (let y = 1; y < H - 1; y++) {
-          for (let x = 1; x < W - 1; x++) {
-            const i = y * W + x;
-            const a = A[i];
-            const b = B[i];
+    const step = () => {
+      C = cols();
+      R = rows();
 
-            const lapA =
-              A[i - W] + A[i + W] + A[i - 1] + A[i + 1] - 4 * a;
-            const lapB =
-              B[i - W] + B[i + W] + B[i - 1] + B[i + 1] - 4 * b;
-
-            const abb = a * b * b;
-            nextA[i] = Math.max(0, Math.min(1, a + DT * (DA * lapA - abb + F * (1 - a))));
-            nextB[i] = Math.max(0, Math.min(1, b + DT * (DB * lapB + abb - (K + F) * b)));
-          }
+      // wave propagation
+      for (let y = 1; y < R - 1; y++) {
+        for (let x = 1; x < C - 1; x++) {
+          const i = y * C + x;
+          cur[i] = (
+            prev[(y - 1) * C + x] +
+            prev[(y + 1) * C + x] +
+            prev[y * C + (x - 1)] +
+            prev[y * C + (x + 1)]
+          ) / 2 - cur[i];
+          cur[i] *= DAMPING;
         }
-        [A, nextA] = [nextA, A];
-        [B, nextB] = [nextB, B];
       }
 
-      const d = imageData.data;
-      for (let i = 0; i < size; i++) {
-        const v = Math.floor(B[i] * 180);
-        d[i * 4] = v;
-        d[i * 4 + 1] = v;
-        d[i * 4 + 2] = v;
-        d[i * 4 + 3] = 255;
+      // draw
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      const cellW = canvas.width / C;
+      const cellH = canvas.height / R;
+
+      for (let y = 0; y < R; y++) {
+        for (let x = 0; x < C; x++) {
+          const v = cur[y * C + x];
+          const abs = Math.abs(v);
+          if (abs < 0.01) continue;
+          const idx = Math.min(Math.floor(abs * 6), CHARS.length - 1);
+          const ch = CHARS[idx];
+          if (!ch || ch === " ") continue;
+          const brightness = Math.min(Math.floor(abs * 400 + 40), 180);
+          ctx.fillStyle = `rgb(${brightness},${brightness},${brightness})`;
+          ctx.fillText(ch, x * cellW, y * cellH);
+        }
       }
-      ctx.putImageData(imageData, 0, 0);
+
+      // swap buffers
+      const tmp = prev;
+      prev = cur;
+      cur = tmp;
+
       raf = requestAnimationFrame(step);
-    }
+    };
 
     raf = requestAnimationFrame(step);
-    return () => cancelAnimationFrame(raf);
+
+    return () => {
+      cancelAnimationFrame(raf);
+      window.removeEventListener("mousemove", onMouseMove);
+      window.removeEventListener("resize", resize);
+    };
   }, []);
 
   return (
@@ -94,8 +133,6 @@ export default function RDCanvas() {
         inset: 0,
         width: "100%",
         height: "100%",
-        imageRendering: "pixelated",
-        opacity: 0.5,
       }}
     />
   );
