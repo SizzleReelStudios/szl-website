@@ -1,3 +1,5 @@
+"use client";
+
 import dynamic from "next/dynamic";
 
 const RDCanvas = dynamic(() => import("@/components/RDCanvas"), { ssr: false });
