@@ -24,15 +24,16 @@ export default function Home() {
         alt="SZL"
         style={{
           position: "relative",
-          width: "clamp(120px, 20vw, 240px)",
+          width: "clamp(240px, 40vw, 480px)",
           zIndex: 1,
         }}
       />
       <p
         style={{
           position: "relative",
-          color: "#888",
+          color: "#aaa",
           fontSize: "clamp(0.85rem, 2.5vw, 1.1rem)",
+          fontWeight: 500,
           letterSpacing: "0.25em",
           textTransform: "uppercase",
           margin: 0,
