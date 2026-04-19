@@ -89,6 +89,10 @@ export default function RDCanvas() {
         }
       }
 
+      // clear borders to prevent edge accumulation
+      for (let x = 0; x < C; x++) { cur[x] = 0; cur[(R - 1) * C + x] = 0; }
+      for (let y = 0; y < R; y++) { cur[y * C] = 0; cur[y * C + C - 1] = 0; }
+
       // draw
       ctx.clearRect(0, 0, canvas.width, canvas.height);
       const cellW = canvas.width / C;
