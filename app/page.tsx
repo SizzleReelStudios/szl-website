@@ -1,62 +1,62 @@
 "use client";
 
+import { FormEvent, useState } from "react";
 import dynamic from "next/dynamic";
 
 const RDCanvas = dynamic(() => import("@/components/RDCanvas"), { ssr: false });
+const PREVIEW_PASSWORD = process.env.NEXT_PUBLIC_SITE_PASSWORD;
+const PREVIEW_SESSION_KEY = "szl_site_preview";
 
 export default function Home() {
+  const [unlocked, setUnlocked] = useState(() => (
+    !PREVIEW_PASSWORD || (typeof window !== "undefined" && window.sessionStorage.getItem(PREVIEW_SESSION_KEY) === "1")
+  ));
+  const [input, setInput] = useState("");
+  const [error, setError] = useState(false);
+
+  function handleUnlock(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    if (input === PREVIEW_PASSWORD) {
+      window.sessionStorage.setItem(PREVIEW_SESSION_KEY, "1");
+      setUnlocked(true);
+      return;
+    }
+    setError(true);
+    setInput("");
+  }
+
   return (
-    <main
-      style={{
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "center",
-        justifyContent: "center",
-        height: "100vh",
-        background: "#000",
-        gap: "16px",
-        position: "relative",
-      }}
-    >
+    <main className="landing-shell">
       <RDCanvas />
       <img
         src="/szl-logo.gif"
         alt="SZL"
-        style={{
-          position: "relative",
-          width: "clamp(240px, 40vw, 480px)",
-          zIndex: 1,
-        }}
+        className="landing-logo"
       />
-      <p
-        style={{
-          position: "relative",
-          color: "#aaa",
-          fontSize: "clamp(0.85rem, 2.5vw, 1.1rem)",
-          fontWeight: 500,
-          letterSpacing: "0.25em",
-          textTransform: "uppercase",
-          margin: 0,
-          zIndex: 1,
-        }}
-      >
+      {!unlocked ? (
+        <form className="preview-gate" onSubmit={handleUnlock}>
+          <input
+            type="password"
+            value={input}
+            onChange={(event) => {
+              setInput(event.target.value);
+              setError(false);
+            }}
+            placeholder="Password"
+            className={`preview-gate__input${error ? " preview-gate__input--error" : ""}`}
+            autoFocus
+          />
+          {error ? <p className="preview-gate__error">Wrong password</p> : null}
+        </form>
+      ) : null}
+      <p className="landing-copy">
         Stay tuned&hellip; something&apos;s sizzling.
       </p>
       <a
         href="https://www.instagram.com/sizzlereelstudios"
         target="_blank"
         rel="noopener noreferrer"
-        style={{
-          position: "fixed",
-          bottom: "32px",
-          left: "50%",
-          transform: "translateX(-50%)",
-          color: "#999",
-          transition: "color 0.2s",
-          zIndex: 1,
-        }}
-        onMouseEnter={e => (e.currentTarget.style.color = "#fff")}
-        onMouseLeave={e => (e.currentTarget.style.color = "#999")}
+        className="landing-instagram"
         aria-label="Instagram"
       >
         <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
