@@ -13,10 +13,10 @@ export async function unlockPreview(
   formData: FormData,
 ): Promise<UnlockState> {
   const password = formData.get("password");
-  const previewPassword = process.env.NEXT_PUBLIC_SITE_PASSWORD;
+  const previewPassword = process.env.SITE_PASSWORD;
 
   if (!previewPassword) {
-    redirect("/home");
+    return { error: "Preview password unavailable" };
   }
 
   if (password !== previewPassword) {
