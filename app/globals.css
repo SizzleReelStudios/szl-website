@@ -15,7 +15,7 @@
 body {
   background: #000;
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-geist-sans), sans-serif;
 }
 
 html {
@@ -107,4 +107,76 @@ body::before {
   background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
   background-repeat: repeat;
   background-size: 200px 200px;
+}
+
+.floating-panel {
+  animation: float-panel 9s ease-in-out infinite;
+}
+
+.floating-panel--delay {
+  animation-delay: 1.8s;
+}
+
+.archive-card {
+  transition:
+    transform 220ms ease,
+    border-color 220ms ease,
+    background-color 220ms ease;
+}
+
+.archive-card:hover {
+  transform: translateY(-6px) rotate(-0.4deg);
+  border-color: rgba(255, 255, 255, 0.22);
+}
+
+.marquee-shell {
+  overflow: hidden;
+}
+
+.marquee-track {
+  display: flex;
+  width: max-content;
+  gap: 2rem;
+  white-space: nowrap;
+  animation: marquee-move 22s linear infinite;
+}
+
+.orbit-chip {
+  position: absolute;
+}
+
+.orbit-chip-1 {
+  top: 18%;
+  left: 54%;
+}
+
+.orbit-chip-2 {
+  right: 12%;
+  top: 50%;
+}
+
+.orbit-chip-3 {
+  bottom: 16%;
+  left: 18%;
+}
+
+@keyframes float-panel {
+  0%,
+  100% {
+    transform: translateY(0px);
+  }
+
+  50% {
+    transform: translateY(-8px);
+  }
+}
+
+@keyframes marquee-move {
+  0% {
+    transform: translateX(0);
+  }
+
+  100% {
+    transform: translateX(-50%);
+  }
 }
