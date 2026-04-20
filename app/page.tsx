@@ -1,39 +1,17 @@
 "use client";
 
-import { FormEvent, useEffect, useState } from "react";
+import { useActionState } from "react";
 import dynamic from "next/dynamic";
-import { useRouter } from "next/navigation";
+import { unlockPreview } from "@/app/preview-auth";
 
 const RDCanvas = dynamic(() => import("@/components/RDCanvas"), { ssr: false });
-const PREVIEW_PASSWORD = process.env.NEXT_PUBLIC_SITE_PASSWORD;
-const PREVIEW_SESSION_KEY = "szl_site_preview";
+
+const initialState = {
+  error: null,
+};
 
 export default function Home() {
-  const router = useRouter();
-  const [input, setInput] = useState("");
-  const [error, setError] = useState(false);
-
-  useEffect(() => {
-    if (!PREVIEW_PASSWORD) {
-      router.replace("/home");
-      return;
-    }
-
-    if (window.sessionStorage.getItem(PREVIEW_SESSION_KEY) === "1") {
-      router.replace("/home");
-    }
-  }, [router]);
-
-  function handleUnlock(event: FormEvent<HTMLFormElement>) {
-    event.preventDefault();
-    if (input === PREVIEW_PASSWORD) {
-      window.sessionStorage.setItem(PREVIEW_SESSION_KEY, "1");
-      router.replace("/home");
-      return;
-    }
-    setError(true);
-    setInput("");
-  }
+  const [state, action, pending] = useActionState(unlockPreview, initialState);
 
   return (
     <main className="landing-shell">
@@ -43,19 +21,16 @@ export default function Home() {
         alt="SZL"
         className="landing-logo"
       />
-      <form className="preview-gate" onSubmit={handleUnlock}>
+      <form className="preview-gate" action={action}>
         <input
           type="password"
-          value={input}
-          onChange={(event) => {
-            setInput(event.target.value);
-            setError(false);
-          }}
+          name="password"
           placeholder="Password"
-          className={`preview-gate__input${error ? " preview-gate__input--error" : ""}`}
+          className={`preview-gate__input${state.error ? " preview-gate__input--error" : ""}`}
           autoFocus
+          disabled={pending}
         />
-        {error ? <p className="preview-gate__error">Wrong password</p> : null}
+        {state.error ? <p className="preview-gate__error">{state.error}</p> : null}
       </form>
       <p className="landing-copy">
         Stay tuned&hellip; something&apos;s sizzling.
