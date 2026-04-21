@@ -194,6 +194,20 @@ If resuming later, the project should be treated like this:
 - continue by replacing seed content with real production data
 - keep using the current typed batch-content workflow
 
+## Handoff Phrase
+
+If you want the session wrapped and saved before closing the terminal, say:
+
+`Wrap it up for handoff.`
+
+That means:
+
+- update `ROADMAP.md`
+- note what was done and what is left
+- list the next files to reopen
+- commit all current changes
+- push `main`
+
 ## Verification Status
 
 Latest checked during this session:

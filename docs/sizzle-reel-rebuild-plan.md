@@ -304,3 +304,16 @@ That gives:
 - easy future migration to a CMS if needed
 
 The next practical implementation step is Phase 1 foundation: route restructure, shared shell, and content model scaffolding.
+
+## Session Handoff
+
+Standard phrase for end-of-session wrap-up:
+
+`Wrap it up for handoff.`
+
+Expected action:
+
+- refresh `ROADMAP.md`
+- capture done / next / reopen files
+- commit the working tree
+- push `main`
