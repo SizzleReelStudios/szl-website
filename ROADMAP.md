@@ -65,6 +65,31 @@ Preview gating still exists. When `SITE_PASSWORD` is set, public routes are gate
   - `content/srs/batches/clients.batch.ts`
 - Updated the runtime content files to consume those batch files.
 
+### Development Seed Integration
+
+- Loaded the temporary dataset from `Desktop/untitled folder/seed-data.json` into the live site content flow.
+- Added `content/srs/development-seed.ts` as the temporary development content source.
+- Mapped that seed into the existing entity structure for:
+  - site config
+  - services
+  - artists
+  - projects/events
+  - venues
+  - clients/promoters
+- Replaced the old empty/seed batch state so the current site now renders populated test content through the existing routes.
+- Added visible TODO markers and seed audit notes to flag weak assumptions, missing fields, and temporary content that needs replacement later.
+
+### Social Proof Feed
+
+- Added a linked `proofItems` layer for social/media proof without changing the archive architecture.
+- Added `content/srs/proof-items.ts`.
+- Added a reusable `components/site/ProofFeed.tsx` component.
+- Wired proof-feed sections into:
+  - homepage
+  - artist archive pages
+  - project detail pages
+- Upgraded the homepage proof section into a visible scrolling marquee-style strip so it reads like moving social proof instead of a static row.
+
 ### Planning / Documentation
 
 - Added `docs/sizzle-reel-rebuild-plan.md`
@@ -80,28 +105,31 @@ Preview gating still exists. When `SITE_PASSWORD` is set, public routes are gate
 - Lineup/archive/detail system is structurally implemented.
 - Content schema is scalable enough to add artists/events later without rewriting page logic.
 - Content intake checklist exists for production population.
+- Development seed content is now populating the site.
+- Homepage, lineup, artist pages, and project pages now render against temporary seed data.
+- Social proof feed exists and is visible on the homepage, with linked proof sections on artist and project pages.
 
 ### Not Done
 
-- Homepage still uses placeholder/interim copy in `content/srs/site.ts`.
-- Services still use interim copy in `content/srs/site.ts`.
-- Artists still use seed entries in `content/srs/batches/artists.batch.ts`.
-- Projects/events are still empty in `content/srs/batches/projects.batch.ts`.
-- Venues are still empty in `content/srs/batches/venues.batch.ts`.
-- Clients/promoters are still empty in `content/srs/batches/clients.batch.ts`.
-- Media galleries and embeds are not populated yet.
+- Homepage and services are using temporary development-seed copy, not final production copy.
+- Artists are still using temporary seed entries with inferred poster tiers and placeholder genre tags.
+- Projects/events are seeded, but still use temporary descriptions, inferred service links, and placeholder media URLs.
+- Venues are populated from seed data, but city/state are defaulted and need confirmation.
+- Clients/promoters are populated from seed data, but `kind` values are inferred and need confirmation.
+- Proof-feed entries are inferred from project records and need to be replaced with real social posts, exact slide references, and final notes.
+- Media galleries still do not have real still-image sets or thumbnails.
 - Legacy files from the older build still exist and have not been cleaned up yet.
 
 ## Highest-Impact Next Step
 
-Populate real content in this order:
+Replace the inferred seed content with real production content in this order:
 
-1. Homepage copy in `content/srs/site.ts`
-2. First real artist batch in `content/srs/batches/artists.batch.ts`
-3. First real project/event batch in `content/srs/batches/projects.batch.ts`
-4. Matching venues in `content/srs/batches/venues.batch.ts`
-5. Matching clients/promoters in `content/srs/batches/clients.batch.ts`
-6. Final services copy in `content/srs/site.ts`
+1. Real homepage/about/services copy in `content/srs/site.ts`
+2. Real artist metadata in `content/srs/batches/artists.batch.ts`
+3. Real project/event records in `content/srs/batches/projects.batch.ts`
+4. Confirmed venue metadata in `content/srs/batches/venues.batch.ts`
+5. Confirmed client/promoter metadata in `content/srs/batches/clients.batch.ts`
+6. Real proof items in `content/srs/proof-items.ts`
 
 This gives the fastest visible progress because it activates:
 
@@ -109,6 +137,7 @@ This gives the fastest visible progress because it activates:
 - the lineup page
 - artist archive pages
 - event detail pages
+- the social proof feed
 
 all at once from real data.
 
@@ -150,6 +179,7 @@ all at once from real data.
 - short summary
 - deliverables
 - published flag
+- real media links instead of temporary example URLs
 
 ### Venues
 
@@ -172,17 +202,32 @@ all at once from real data.
 - embed URLs
 - alt text or enough context to write it cleanly
 
+### Social Proof / Feed Items
+
+- post URL
+- who uploaded it
+- platform
+- post type: `carousel`, `reel`, `recap`, or `tour-post`
+- linked project slug
+- linked artist slug
+- short proof note
+- exact slide / clip / frame note if relevant
+- thumbnail or preview still if available
+
 ## Files To Reopen First Next Session
 
 - `ROADMAP.md`
 - `docs/sizzle-reel-rebuild-plan.md`
 - `docs/content-population-checklist.md`
+- `content/srs/development-seed.ts`
 - `content/srs/site.ts`
 - `content/srs/batches/artists.batch.ts`
 - `content/srs/batches/projects.batch.ts`
 - `content/srs/batches/venues.batch.ts`
 - `content/srs/batches/clients.batch.ts`
+- `content/srs/proof-items.ts`
 - `lib/srs/data.ts`
+- `components/site/ProofFeed.tsx`
 
 ## Resume State
 
@@ -191,7 +236,8 @@ If resuming later, the project should be treated like this:
 - architecture is locked
 - do not redesign the route structure
 - do not collapse the lineup/archive/detail system
-- continue by replacing seed content with real production data
+- continue by replacing temporary development-seed content with real production data
+- keep the proof feed as a linked proof layer, not a separate portfolio system
 - keep using the current typed batch-content workflow
 
 ## Handoff Phrase
@@ -213,6 +259,4 @@ That means:
 Latest checked during this session:
 
 - `npm run build` passed
-- `npm run lint` had only legacy warnings in untouched older files:
-  - `components/RDCanvas.tsx`
-  - `components/Work.tsx`
+- latest content/proof-feed commit on `main` before this handoff: `c938088`
