@@ -238,6 +238,18 @@ The build can start with scaffolding, but these inputs are needed to complete th
 ### Navigation and IA
 
 - final nav labels
+
+## Resume Shortcut
+
+If the user says:
+
+`Open roadmap.`
+
+That means:
+
+- open `ROADMAP.md`
+- treat it as the current handoff source
+- resume from the documented next step without re-planning the architecture
 - whether contact should be `Contact`, `Enquire`, or both
 - whether `Services` deserves its own page in v1 or remains a home section plus page
 

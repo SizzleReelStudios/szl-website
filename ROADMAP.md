@@ -240,6 +240,20 @@ If resuming later, the project should be treated like this:
 - keep the proof feed as a linked proof layer, not a separate portfolio system
 - keep using the current typed batch-content workflow
 
+## Resume Phrase
+
+If you start a new chat and say:
+
+`Open roadmap.`
+
+That should be treated as:
+
+- read `ROADMAP.md` first
+- use it as the source of truth for current project state
+- continue from the highest-impact next step
+- reopen the listed files before making new changes
+- keep the architecture locked unless the user explicitly changes direction
+
 ## Handoff Phrase
 
 If you want the session wrapped and saved before closing the terminal, say:
