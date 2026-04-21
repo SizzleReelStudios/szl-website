@@ -1,16 +1,21 @@
+import {
+  developmentSeed,
+  getSeedServiceDeliverables,
+  getSeedServiceSlug,
+} from "@/content/srs/development-seed";
 import type { Service, SiteConfig } from "@/lib/srs/types";
 
 export const siteConfig: SiteConfig = {
   brand: {
     parent: "SZL",
-    name: "Sizzle Reel Studios",
+    name: developmentSeed.site.brand,
     shortName: "SRS",
-    location: "Perth, Western Australia",
+    location: developmentSeed.site.location,
   },
   seo: {
-    title: "Sizzle Reel Studios",
+    title: developmentSeed.site.brand,
     description:
-      "Perth videography trio capturing DJs, artists, venues, clubs, and festivals with the pace and texture of the night intact.",
+      "Perth videography trio capturing nightlife, music, artist sets, clubs, and festivals with the energy of the room still intact.",
   },
   nav: [
     { label: "Home", href: "/" },
@@ -20,47 +25,32 @@ export const siteConfig: SiteConfig = {
     { label: "Contact", href: "/contact" },
   ],
   contact: {
-    email: "hello@szl.au",
-    instagram: "https://www.instagram.com/sizzlereelstudios",
+    email: developmentSeed.site.contact.email,
+    instagram: developmentSeed.site.contact.instagram,
   },
   home: {
-    eyebrow: "Perth nightlife production",
-    headline: "Video that keeps the weight of the room.",
-    subheadline:
-      "Sizzle Reel Studios is the videography arm of SZL. We shoot DJs, artists, venues, promoters, and festivals without sanding off the energy that made the night worth filming.",
-    proofLine:
-      "Built for lineups, club rooms, artist rollouts, aftermovies, and fast-turn social edits.",
-    ctaPrimary: "View The Lineup",
-    ctaSecondary: "Start An Enquiry",
+    eyebrow: "Perth, Western Australia",
+    headline: developmentSeed.homepage.hero.headline,
+    subheadline: developmentSeed.homepage.hero.subheading,
+    proofLine: developmentSeed.homepage.intro,
+    ctaPrimary: developmentSeed.homepage.hero.ctaPrimary,
+    ctaSecondary: developmentSeed.homepage.hero.ctaSecondary,
   },
   about: {
-    intro:
-      "We're a Perth-based videography trio working inside music, nightlife, and event culture.",
+    intro: developmentSeed.homepage.aboutSnippet,
     story:
-      "The goal is straightforward: make footage feel like the night actually felt. Not over-polished. Not fake-chaotic. Just sharp enough to sell the energy and real enough to hold credibility with people who were there.",
+      "We work across clubs, festivals, artist-led nights, and the environments around them. This development dataset is temporary, but the direction is fixed: keep the work sharp, high-energy, and credible to the people actually in the room.",
   },
 };
 
-export const services: Service[] = [
-  {
-    id: "event-coverage",
-    slug: "event-coverage",
-    name: "Event Coverage",
-    summary: "Full-night coverage built for recaps, promos, and social cutdowns.",
-    deliverables: ["aftermovies", "recaps", "vertical edits", "photo grabs"],
-  },
-  {
-    id: "artist-content",
-    slug: "artist-content",
-    name: "Artist Content",
-    summary: "Fast, usable footage for DJs and artists before, during, and after sets.",
-    deliverables: ["reels", "set clips", "hype edits", "announcement assets"],
-  },
-  {
-    id: "venue-campaigns",
-    slug: "venue-campaigns",
-    name: "Venue Campaigns",
-    summary: "Ongoing content support for clubs, promoters, and hospitality spaces.",
-    deliverables: ["campaign edits", "event teasers", "brand coverage"],
-  },
-];
+export const services: Service[] = developmentSeed.services.map((service) => {
+  const slug = getSeedServiceSlug(service.title);
+
+  return {
+    id: slug,
+    slug,
+    name: service.title,
+    summary: service.description,
+    deliverables: getSeedServiceDeliverables(slug),
+  };
+});

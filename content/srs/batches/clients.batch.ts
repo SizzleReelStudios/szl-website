@@ -1,15 +1,15 @@
+import {
+  developmentSeed,
+  getSeedClientKind,
+} from "@/content/srs/development-seed";
 import type { Client } from "@/lib/srs/types";
 
 export const clientBatches: Client[][] = [
-  [
-    // Paste client / promoter records here.
-    // Example:
-    // {
-    //   id: "villa-nightclub",
-    //   slug: "villa-nightclub",
-    //   name: "Villa Nightclub",
-    //   kind: "club",
-    //   website: "https://example.com",
-    // },
-  ],
+  developmentSeed.clients.map((client) => ({
+    id: client.slug,
+    slug: client.slug,
+    name: client.name,
+    // TODO: Replace inferred client kinds with confirmed promoter / club / festival types.
+    kind: getSeedClientKind(client.slug),
+  })),
 ];

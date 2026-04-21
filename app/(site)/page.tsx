@@ -1,12 +1,24 @@
 import Link from "next/link";
 import ContactPanel from "@/components/site/ContactPanel";
 import PosterLineup from "@/components/site/PosterLineup";
-import { getArtistLineup, getServices, getSiteConfig } from "@/lib/srs/data";
+import ProofFeed from "@/components/site/ProofFeed";
+import SeedDataNotice from "@/components/site/SeedDataNotice";
+import {
+  getArtistLineup,
+  getProjects,
+  getRecentProofItems,
+  getSeedAudit,
+  getServices,
+  getSiteConfig,
+} from "@/lib/srs/data";
 
 export default function HomePage() {
   const site = getSiteConfig();
   const lineup = getArtistLineup();
   const serviceList = getServices();
+  const projects = getProjects();
+  const proofItems = getRecentProofItems();
+  const audit = getSeedAudit();
 
   return (
     <main>
@@ -44,12 +56,15 @@ export default function HomePage() {
           <div className="grid gap-4">
             <div className="rounded-[1.8rem] border border-white/10 bg-white/[0.03] p-6">
               <p className="text-[0.68rem] uppercase tracking-[0.3em] text-white/42">
-                Positioning
+                Snapshot
               </p>
               <div className="mt-5 grid gap-3 text-sm leading-7 text-white/68">
-                <p>Client-facing production site for the Sizzle Reel Studios branch.</p>
-                <p>Built around artist archives, event proof, and a clear path to enquiry.</p>
-                <p>Scene-aware presentation without falling into generic agency language.</p>
+                <p>{site.about.intro}</p>
+                <p>{site.about.story}</p>
+                <p>
+                  Current development seed includes {lineup.length} artists and{" "}
+                  {projects.length} logged projects.
+                </p>
               </div>
             </div>
 
@@ -69,6 +84,29 @@ export default function HomePage() {
               ))}
             </div>
           </div>
+        </div>
+      </section>
+
+      <section className="px-4 pb-8 sm:px-6">
+        <div className="mx-auto max-w-7xl">
+          <SeedDataNotice
+            items={[
+              audit.missingFields[0],
+              audit.missingFields[1],
+              audit.weakSpots[0],
+            ]}
+          />
+        </div>
+      </section>
+
+      <section className="site-band px-4 py-12 sm:px-6 sm:py-16">
+        <div className="mx-auto max-w-7xl">
+          <ProofFeed
+            items={proofItems}
+            mode="scroll"
+            title="Recent proof moving through real posts, recap slides, and tour uploads."
+            body="This strip is meant to read like social proof in motion: notable uploads where the footage appeared in the artist or promoter rollout."
+          />
         </div>
       </section>
 
@@ -115,40 +153,40 @@ export default function HomePage() {
         <div className="mx-auto grid max-w-7xl gap-4 md:grid-cols-3">
           <div className="rounded-[1.7rem] border border-white/10 bg-white/[0.03] p-6">
             <p className="text-[0.68rem] uppercase tracking-[0.3em] text-white/40">
-              What It Avoids
+              Artists Loaded
             </p>
             <p className="font-display mt-4 text-[2rem] uppercase leading-none text-white">
-              No dead agency grid.
+              {lineup.length}
             </p>
             <p className="mt-4 text-sm leading-7 text-white/58">
-              The work archive is being built around recognition, context, and repeat proof,
-              not anonymous thumbnail soup.
+              The current development archive is already structured artist-first, so new names
+              slot straight into the lineup wall and archive routes.
             </p>
           </div>
 
           <div className="rounded-[1.7rem] border border-white/10 bg-white/[0.03] p-6">
             <p className="text-[0.68rem] uppercase tracking-[0.3em] text-white/40">
-              Why It Scales
+              Projects Logged
             </p>
             <p className="font-display mt-4 text-[2rem] uppercase leading-none text-white">
-              Add data, not page logic.
+              {projects.length}
             </p>
             <p className="mt-4 text-sm leading-7 text-white/58">
-              Artists, venues, promoters, and projects are modeled as separate entities so new
-              entries slot into the existing routes.
+              Event pages are already rendering from the seed dataset, even though thumbnails,
+              stills, and final descriptions still need replacing.
             </p>
           </div>
 
           <div className="rounded-[1.7rem] border border-white/10 bg-white/[0.03] p-6">
             <p className="text-[0.68rem] uppercase tracking-[0.3em] text-white/40">
-              Conversion
+              Next Content Pass
             </p>
             <p className="font-display mt-4 text-[2rem] uppercase leading-none text-white">
-              Keep the enquiry path obvious.
+              Replace the weak spots.
             </p>
             <p className="mt-4 text-sm leading-7 text-white/58">
-              Home, archive, and project templates all hold clear contact routes without turning
-              the site into a brochure wall.
+              Final venue details, confirmed service links, stills, and real embed URLs are the
+              main content gaps left in this development pass.
             </p>
           </div>
         </div>

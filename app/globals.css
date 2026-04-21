@@ -186,6 +186,29 @@ body::before {
   animation: marquee-move 22s linear infinite;
 }
 
+.proof-marquee {
+  position: relative;
+  overflow: hidden;
+  mask-image: linear-gradient(90deg, transparent, black 8%, black 92%, transparent);
+  -webkit-mask-image: linear-gradient(90deg, transparent, black 8%, black 92%, transparent);
+}
+
+.proof-marquee__track {
+  display: flex;
+  width: max-content;
+  gap: 1rem;
+  padding-block: 0.25rem;
+  animation: proof-feed-move 30s linear infinite;
+}
+
+.proof-marquee:hover .proof-marquee__track {
+  animation-play-state: paused;
+}
+
+.proof-marquee__card {
+  backdrop-filter: blur(10px);
+}
+
 .orbit-chip {
   position: absolute;
 }
@@ -223,5 +246,15 @@ body::before {
 
   100% {
     transform: translateX(-50%);
+  }
+}
+
+@keyframes proof-feed-move {
+  0% {
+    transform: translateX(0);
+  }
+
+  100% {
+    transform: translateX(calc(-50% - 0.5rem));
   }
 }

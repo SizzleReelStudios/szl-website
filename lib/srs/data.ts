@@ -1,9 +1,17 @@
 import { artists } from "@/content/srs/artists";
 import { clients } from "@/content/srs/clients";
+import { developmentSeedAudit } from "@/content/srs/development-seed";
+import { proofItems } from "@/content/srs/proof-items";
 import { projects } from "@/content/srs/projects";
 import { services, siteConfig } from "@/content/srs/site";
 import { venues } from "@/content/srs/venues";
-import type { ArtistLineupEntry, Project, ResolvedProject } from "@/lib/srs/types";
+import type {
+  ArtistLineupEntry,
+  Project,
+  ProofItem,
+  ResolvedProofItem,
+  ResolvedProject,
+} from "@/lib/srs/types";
 
 export function getSiteConfig() {
   return siteConfig;
@@ -25,7 +33,7 @@ export function getProjects() {
   return projects.filter((project) => project.published);
 }
 
-function sortProjectsByDateDesc(collection: Project[]) {
+function sortByDateDesc<T extends { date: string }>(collection: T[]) {
   return [...collection].sort((a, b) => {
     const aTime = Date.parse(a.date);
     const bTime = Date.parse(b.date);
@@ -36,6 +44,10 @@ function sortProjectsByDateDesc(collection: Project[]) {
 
     return bTime - aTime;
   });
+}
+
+function sortProjectsByDateDesc(collection: Project[]) {
+  return sortByDateDesc(collection);
 }
 
 export function getProjectsByArtistSlug(artistSlug: string) {
@@ -59,6 +71,10 @@ export function getClientBySlug(slug: string) {
   return clients.find((client) => client.slug === slug);
 }
 
+export function getProofItems() {
+  return sortByDateDesc(proofItems.filter((item) => item.status !== "seed" || item.postUrl));
+}
+
 export function resolveProject(project: Project): ResolvedProject {
   return {
     ...project,
@@ -70,6 +86,17 @@ export function resolveProject(project: Project): ResolvedProject {
     services: project.serviceSlugs
       .map((serviceSlug) => services.find((service) => service.slug === serviceSlug))
       .filter((service) => service !== undefined),
+  };
+}
+
+export function resolveProofItem(item: ProofItem): ResolvedProofItem {
+  const project = getProjects().find((entry) => entry.slug === item.projectSlug) ?? null;
+
+  return {
+    ...item,
+    artist: getArtistBySlug(item.artistSlug) ?? null,
+    project,
+    client: project ? getClientBySlug(project.clientSlug) ?? null : null,
   };
 }
 
@@ -122,6 +149,7 @@ export function getArtistArchiveSummary(artistSlug: string) {
   return {
     artist,
     projects: artistProjects.map(resolveProject),
+    proofItems: getProofItemsByArtistSlug(artistSlug).map(resolveProofItem),
     totalProjects: artistProjects.length,
     latestProjectDate: latestProject?.date ?? null,
   };
@@ -138,4 +166,24 @@ export function getResolvedProjectByArtistAndSlug(
   }
 
   return resolveProject(project);
+}
+
+export function getProofItemsByArtistSlug(artistSlug: string) {
+  return sortByDateDesc(getProofItems().filter((item) => item.artistSlug === artistSlug));
+}
+
+export function getProofItemsByProjectSlug(projectSlug: string) {
+  return sortByDateDesc(getProofItems().filter((item) => item.projectSlug === projectSlug));
+}
+
+export function getResolvedProofItemsByProjectSlug(projectSlug: string) {
+  return getProofItemsByProjectSlug(projectSlug).map(resolveProofItem);
+}
+
+export function getRecentProofItems(limit = 6) {
+  return getProofItems().slice(0, limit).map(resolveProofItem);
+}
+
+export function getSeedAudit() {
+  return developmentSeedAudit;
 }

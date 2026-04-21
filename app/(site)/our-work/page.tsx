@@ -1,9 +1,12 @@
 import PageIntro from "@/components/site/PageIntro";
 import PosterLineup from "@/components/site/PosterLineup";
-import { getArtistLineup } from "@/lib/srs/data";
+import SeedDataNotice from "@/components/site/SeedDataNotice";
+import { getArtistLineup, getProjects, getSeedAudit } from "@/lib/srs/data";
 
 export default function OurWorkPage() {
   const lineup = getArtistLineup();
+  const projects = getProjects();
+  const audit = getSeedAudit();
 
   return (
     <main>
@@ -32,15 +35,15 @@ export default function OurWorkPage() {
             </div>
 
             <div className="rounded-[1.7rem] border border-white/10 bg-white/[0.03] p-6">
-              <p className="text-[0.68rem] uppercase tracking-[0.3em] text-white/40">
-                Data Model
-              </p>
-              <ul className="mt-4 space-y-3 text-sm leading-7 text-white/58">
-                <li>Artists hold poster hierarchy and archive identity.</li>
-                <li>Projects carry event-level metadata and media.</li>
-                <li>Venues and promoters stay normalized for reuse later.</li>
-              </ul>
+              <p className="text-[0.68rem] uppercase tracking-[0.3em] text-white/40">Loaded</p>
+              <div className="mt-4 grid gap-3 text-sm leading-7 text-white/58">
+                <p>{lineup.length} artists in the poster wall.</p>
+                <p>{projects.length} projects currently linked into archive routes.</p>
+                <p>Venues and clients are normalized so later data drops do not touch routing.</p>
+              </div>
             </div>
+
+            <SeedDataNotice title="Archive TODOs" items={audit.assumptions.slice(0, 2)} />
           </div>
         </div>
       </section>

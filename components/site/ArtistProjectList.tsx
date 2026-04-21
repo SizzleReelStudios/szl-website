@@ -38,6 +38,11 @@ export default function ArtistProjectList({
                 <p className="mt-3 max-w-2xl text-sm leading-7 text-white/56">
                   {project.summary}
                 </p>
+                {!project.thumbnail ? (
+                  <p className="mt-3 text-[0.68rem] uppercase tracking-[0.24em] text-amber-200/60">
+                    TODO: thumbnail still pending
+                  </p>
+                ) : null}
               </div>
 
               <div className="text-sm leading-7 text-white/58 sm:text-right">

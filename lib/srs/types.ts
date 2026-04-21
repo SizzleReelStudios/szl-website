@@ -76,6 +76,25 @@ export type MediaAsset = {
   alt: string;
 };
 
+export type ProofItem = {
+  id: string;
+  slug: string;
+  projectSlug: string;
+  artistSlug: string;
+  platform: "instagram" | "tiktok" | "youtube" | "other";
+  postType: "carousel" | "reel" | "recap" | "tour-post";
+  sourceName: string;
+  sourceRole: "artist" | "client" | "promoter" | "venue";
+  title: string;
+  note: string;
+  date: string;
+  postUrl: string;
+  previewLabel: string;
+  focusSlide?: string;
+  thumbnail?: string;
+  status: "seed" | "published";
+};
+
 export type Project = {
   id: string;
   slug: string;
@@ -103,4 +122,10 @@ export type ResolvedProject = Project & {
   venue: Venue | null;
   client: Client | null;
   services: Service[];
+};
+
+export type ResolvedProofItem = ProofItem & {
+  artist: Artist | null;
+  project: Project | null;
+  client: Client | null;
 };

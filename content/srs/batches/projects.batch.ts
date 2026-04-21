@@ -1,31 +1,29 @@
+import {
+  developmentSeed,
+  getSeedProjectServiceSlugs,
+} from "@/content/srs/development-seed";
 import type { Project } from "@/lib/srs/types";
 
 export const projectBatches: Project[][] = [
-  [
-    // Paste the first real project batch here.
-    // Example:
-    // {
-    //   id: "artist-event-2025",
-    //   slug: "artist-event-2025",
-    //   artistSlugs: ["artist-slug"],
-    //   eventName: "Artist at Event Name",
-    //   title: "Artist at Event Name",
-    //   date: "2025-02-14",
-    //   venueSlug: "venue-slug",
-    //   clientSlug: "client-slug",
-    //   serviceSlugs: ["event-coverage"],
-    //   summary: "Short description of the shoot and deliverables.",
-    //   deliverables: ["event recap", "vertical clips"],
-    //   thumbnail: "/media/projects/example/thumb.jpg",
-    //   gallery: [
-    //     {
-    //       type: "image",
-    //       src: "/media/projects/example/still-01.jpg",
-    //       alt: "Description of still",
-    //     },
-    //   ],
-    //   embedUrl: "https://www.instagram.com/reel/XXXXXXXX/",
-    //   published: true,
-    // },
-  ],
+  developmentSeed.projects.map((project) => ({
+    id: project.slug,
+    slug: project.slug,
+    artistSlugs: [project.artistSlug],
+    eventName: project.title,
+    title: project.title,
+    date: project.date,
+    venueSlug: project.venueSlug,
+    clientSlug: project.clientSlug,
+    // TODO: Replace keyword-inferred services with confirmed project deliverables.
+    serviceSlugs: getSeedProjectServiceSlugs(project.description),
+    summary: project.description,
+    deliverables: ["TODO: confirm deliverables for this project"],
+    gallery: project.media.map((media, index) => ({
+      type: media.type === "embed" ? "video-embed" : "image",
+      src: media.url,
+      alt: `${project.title} media item ${index + 1}`,
+    })),
+    embedUrl: project.media.find((media) => media.type === "embed")?.url,
+    published: true,
+  })),
 ];
