@@ -8,14 +8,14 @@
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --font-sans: var(--font-body);
+  --font-display: var(--font-display);
 }
 
 body {
   background: #000;
   color: var(--foreground);
-  font-family: var(--font-geist-sans), sans-serif;
+  font-family: var(--font-body), sans-serif;
 }
 
 html {
@@ -33,6 +33,7 @@ html {
   position: relative;
 }
 
+.landing-panel,
 .landing-logo,
 .landing-copy,
 .preview-gate,
@@ -41,8 +42,23 @@ html {
   z-index: 1;
 }
 
+.landing-panel {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+}
+
+.landing-kicker {
+  color: #8f8f8f;
+  font-size: 0.72rem;
+  letter-spacing: 0.34em;
+  text-transform: uppercase;
+}
+
 .landing-logo {
   width: clamp(240px, 40vw, 480px);
+  height: auto;
 }
 
 .preview-gate {
@@ -94,6 +110,35 @@ html {
 
 .landing-instagram:hover {
   color: #fff;
+}
+
+.site-frame {
+  position: relative;
+  isolation: isolate;
+}
+
+.font-display {
+  font-family: var(--font-display), sans-serif;
+}
+
+.site-band {
+  position: relative;
+}
+
+.site-band::after {
+  content: "";
+  position: absolute;
+  inset-inline: 0;
+  top: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.16), transparent);
+}
+
+.poster-grid {
+  background-image:
+    linear-gradient(rgba(255,255,255,0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.05) 1px, transparent 1px);
+  background-size: 44px 44px;
 }
 
 /* Grain overlay */

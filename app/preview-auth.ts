@@ -32,5 +32,5 @@ export async function unlockPreview(
     maxAge: 60 * 60 * 8,
   });
 
-  redirect("/home");
+  redirect("/");
 }
