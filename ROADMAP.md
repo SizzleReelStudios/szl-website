@@ -1,244 +1,126 @@
-# Sizzle Reel Studios Roadmap
+# SZL Website Roadmap
 
-Last updated: 2026-04-21
+Last updated: 2026-07-21
 
-## Current Snapshot
+## Direction Change (2026-07-21)
 
-This repo is now being rebuilt as the client-facing website for `Sizzle Reel Studios`, not as a general SZL umbrella site.
+The previous "client-facing Sizzle Reel Studios site only" framing is superseded. The site is now the **SZL umbrella site**: one house for everything the trio does, with Sizzle Reel Studios (videography) as the commercial wing inside it.
 
-The current architecture is locked around:
+Core positioning, in the user's words: the work proves the skill; the site proves they're fun to work with. Target read from a promoter/brand visitor: "these guys seem cool to work with, they're skilled videographers, and they've worked with major artists and reputable event coordinators/brands in Perth."
 
-- `/` Home
-- `/our-work` lineup poster page
-- `/our-work/[artistSlug]` artist archive page
-- `/our-work/[artistSlug]/[projectSlug]` event/project detail page
-- `/about`
-- `/services`
-- `/contact`
-- `/preview`
+Two audiences, two paths through one site:
 
-Preview gating still exists. When `SITE_PASSWORD` is set, public routes are gated and unauthenticated users are redirected to `/preview`.
+- **Promoter/brand doing due diligence** — needs credibility fast, on a phone, likely via an Instagram link. Their path must never be blocked by the weird stuff.
+- **Fan/curious visitor** — here for the vibe, happily gets lost in the personality wings.
 
-## What We Did This Session
+Rule: the weird is *ambient* on the business path (seasoning — Frank comments, writing voice, poster art) and *concentrated* off it (Portal, Cinema — destinations you choose).
 
-### Architecture
+## Target Site Structure
 
-- Replaced the old single-page `/home`-centric SZL direction with a dedicated Sizzle Reel Studios route structure.
-- Kept the current Next.js App Router + TypeScript + Tailwind v4 stack.
-- Moved preview entry to `/preview`.
-- Changed legacy `/home` to redirect to `/`.
+### The spine
 
-### Shared Site Foundation
+1. **Enter screen** (`/preview` today) — rotating SZL logo, flames, showreel footage playing within the flames. Vibe checkpoint, not an obstacle: must load and enter fast. Build in graceful layers: logo alone → logo + flames → flames revealing footage.
+2. **Landing / Frank's crossroads** (`/`) — Frank (mascot, trio-identity-as-one) greets the visitor: "what are you doing here?" Options route to video work / the Poddy / the Cinema / self-guided wandering. "Check out video work" is first and most prominent — it is the money path. Ignoring Frank and scrolling past is a valid answer he reacts to.
+3. **Fresh Off The Grill** — newspaper-front-page section on the landing page below Frank. Recent/notable work across everything SZL does. This is the "we are active right now" heartbeat. Builds on the existing `proofItems` layer plus a `featured` flag; no new architecture needed.
+4. **Sizzle Reel Studios wing** — the videography section (see below). The existing lineup/archive/detail system lives here unchanged.
+5. **Personality wings** — the Cinema, the Poddy, the Portal, Meet the Snags.
 
-- Added a shared site shell in `app/(site)/layout.tsx`.
-- Added reusable site components in `components/site/`.
-- Tightened the visual direction toward dark, cinematic, nightlife-adjacent presentation.
-- Swapped the base typography to a stronger display/body pairing for the new direction.
+### Videography wing (Sizzle Reel Studios) — where the sale happens
 
-### Core Pages
+- **Wing front page:** showreel watchable in two taps from anywhere, then the credibility wall — artist names, venue/promoter/brand logos, prominently displayed. Clients and venues are display-worthy first-class content, not just relational metadata.
+- **The Lineup, per-year posters:** one festival-lineup poster per year (2023, 2024, 2025 spine). Doubles as creative artefact and resume — the growth story is the poster filling up year over year. Artists can appear across multiple years at different tiers (support in 2023, headliner in 2025). Add a per-artist size/weight nudge in the data so each year's poster can be art-directed without code changes. Clicking a name → artist archive, optionally pre-filtered to that year.
+- **Artist archive → event detail pages:** already built. Each event page is a proof unit: footage, stills, client/promoter/venue named, deliverables. Credibility compounds per entry.
+- **Proof feed:** the receipts layer (artist reposted it, promoter used it, recap did numbers). Stays woven through artist and event pages as-is.
+- **Services + contact:** boring on purpose. Clear services, clear booking path, no riddles.
 
-- Built the new homepage scaffold in `app/(site)/page.tsx`.
-- Built the lineup page in `app/(site)/our-work/page.tsx`.
-- Built the artist archive template in `app/(site)/our-work/[artistSlug]/page.tsx`.
-- Built the event/project detail template in `app/(site)/our-work/[artistSlug]/[projectSlug]/page.tsx`.
-- Kept About / Services / Contact as lower-priority support pages on the same foundation.
+### Personality wings
 
-### Data Model
+- **The Cinema** — hub for SIZZL3 skits and web series (Stanley's Playground, Killing of the Clones, SZL Vlogs...). Content model: `series` and `episode` entities with per-platform links. Core UI is the timeline/episode-order view (helps new viewers follow the story); the cinema-room skin (seats, screen) sits on top. YouTube is the preferred in-page embed source; TikTok/Instagram as outbound links per episode.
+- **The Poddy (Sausage Sizzle Poddy)** — gets a page even while inactive: "on ice, back soon" in the trio's voice. Owning the hiatus beats hiding it.
+- **The Portal** — the existential/weird wing. Branching-narrative state machine (three heads, "trust one", multiple-choice storylines). Rewards (discount codes, secret merch) deferred: build the narrative engine with placeholder rewards; store integration is its own later project (store platform TBD — ask user when relevant). Can grow over time from branching story toward Myst-style point-and-click (pre-rendered/360 scenes with hotspots — looks expensive, runs cheap). Filmed-footage-as-scenes (FMV style) plays to the trio's videography skills and is bandwidth-cheap.
+- **Meet the Snags** — team page, three portrait-frame cards, roles + personality copy + links. Old `team.json` / `Collective.tsx` from the legacy build can be cannibalised. Easy early ship.
 
-- Replaced the old flat JSON direction with a typed relational content model.
-- Added core entities for:
-  - site config
-  - services
-  - artists
-  - projects/events
-  - venues
-  - clients/promoters
-- Added relational helpers in `lib/srs/data.ts` so page logic stays stable as entries grow.
+### Frank (the mascot layer)
 
-### Batch Content Workflow
+- Persistent layer in the site shell — survives navigation, "comes with you" across pages. Knows current page, where you came from, and what you answered at the crossroads; reacts contextually (idle comments per page, quiet in the cinema, different mood in the Portal).
+- Dismissible with one click; doesn't guilt-trip (or does, exactly once).
+- **Visual form: animated pixel art**, small (8–16-bit feel, ~32×32/64×64 base, integer-scaled for crispness). Sprite-sheet loops: idle, blink, point, react, judge. A few KB — near-zero bandwidth cost.
+- **The fidelity shift (Portal only):** corner Frank turns to camera and becomes detailed, rotoscoped pixel art — eerie because it breaks the established low-fi baseline. Amplifiers: Frank leaving his corner box, page pixels degrading toward him, frame rate shifting from chunky 8fps sprite timing to fluid 24fps rotoscoped motion. Produced from *filmed footage* run through an automatable pixelation pipeline (downscale, palette quantization, dithering, chunky frame timing) — a script the trio can drop footage into. Video only loads inside the Portal.
+- Frank's design: has an ideal/canonical look but can vary. Exact design not blocking — prototype the whole Frank system (corner placement, dialogue, page-awareness, memory) with a placeholder sprite; real art drops in later. Pixel-art sprite set may be a small commission if no one in the trio draws.
+- Dialogue as text bubbles (silent-autoplay-safe for Instagram in-app browser). Audio is a possible later upgrade behind tap-to-unmute.
 
-- Added a batch-friendly content workflow so real data can be pasted in without touching routing logic.
-- Added:
-  - `content/srs/batches/artists.batch.ts`
-  - `content/srs/batches/projects.batch.ts`
-  - `content/srs/batches/venues.batch.ts`
-  - `content/srs/batches/clients.batch.ts`
-- Updated the runtime content files to consume those batch files.
+## Build Sequencing (agreed)
 
-### Development Seed Integration
+**Phase 1 — the commercial job (ship this first):**
 
-- Loaded the temporary dataset from `Desktop/untitled folder/seed-data.json` into the live site content flow.
-- Added `content/srs/development-seed.ts` as the temporary development content source.
-- Mapped that seed into the existing entity structure for:
-  - site config
-  - services
-  - artists
-  - projects/events
-  - venues
-  - clients/promoters
-- Replaced the old empty/seed batch state so the current site now renders populated test content through the existing routes.
-- Added visible TODO markers and seed audit notes to flag weak assumptions, missing fields, and temporary content that needs replacement later.
+1. Videography wing to done-done: real content in, per-year lineup posters, client/venue credibility wall.
+2. Landing page restructured into Frank's crossroads (placeholder Frank sprite is fine) + Fresh Off The Grill.
+3. Enter screen upgrade (flames/showreel) in its graceful-degradation layers.
 
-### Social Proof Feed
+**Phase 2 — the personality wings, each one a postable "the site got weirder" moment:**
 
-- Added a linked `proofItems` layer for social/media proof without changing the archive architecture.
-- Added `content/srs/proof-items.ts`.
-- Added a reusable `components/site/ProofFeed.tsx` component.
-- Wired proof-feed sections into:
-  - homepage
-  - artist archive pages
-  - project detail pages
-- Upgraded the homepage proof section into a visible scrolling marquee-style strip so it reads like moving social proof instead of a static row.
+4. Meet the Snags (easy win, could even ship in phase 1).
+5. The Cinema.
+6. The Portal narrative engine, then eerie-Frank fidelity shift, then reward/store wiring.
 
-### Planning / Documentation
+## Carried Forward From the SRS Build (still valid)
 
-- Added `docs/sizzle-reel-rebuild-plan.md`
-- Added `docs/content-population-checklist.md`
+- Next.js App Router + TypeScript + Tailwind v4 stack.
+- Preview gating: when `SITE_PASSWORD` is set, public routes gate and redirect to `/preview`.
+- The lineup/archive/detail route system under `/our-work` — do not collapse it; it becomes the videography wing's core.
+- Typed relational content model (site config, services, artists, projects/events, venues, clients/promoters) with batch files under `content/srs/batches/` and helpers in `lib/srs/data.ts`.
+- Proof feed layer: `content/srs/proof-items.ts` + `components/site/ProofFeed.tsx`.
+- Docs: `docs/sizzle-reel-rebuild-plan.md`, `docs/content-population-checklist.md` (pre-date the umbrella direction; read with that in mind).
 
-## Current State Of The Build
+## Current State
 
 ### Done
 
-- Route architecture is in place.
-- Global shell is in place.
-- Preview gating is wired into the new route structure.
-- Lineup/archive/detail system is structurally implemented.
-- Content schema is scalable enough to add artists/events later without rewriting page logic.
-- Content intake checklist exists for production population.
-- Development seed content is now populating the site.
-- Homepage, lineup, artist pages, and project pages now render against temporary seed data.
-- Social proof feed exists and is visible on the homepage, with linked proof sections on artist and project pages.
+- SRS route architecture, global shell, preview gating, lineup/archive/detail system, scalable content schema, proof feed — all in place and rendering against development seed data.
+- Concept/mockup pass for the umbrella direction (six sketched screens: enter screen, Fresh Off The Grill, per-year lineup, the Portal, the Cinema, Meet the Snags) — discussed and mapped to architecture in this session.
 
 ### Not Done
 
-- Homepage and services are using temporary development-seed copy, not final production copy.
-- Artists are still using temporary seed entries with inferred poster tiers and placeholder genre tags.
-- Projects/events are seeded, but still use temporary descriptions, inferred service links, and placeholder media URLs.
-- Venues are populated from seed data, but city/state are defaulted and need confirmation.
-- Clients/promoters are populated from seed data, but `kind` values are inferred and need confirmation.
-- Proof-feed entries are inferred from project records and need to be replaced with real social posts, exact slide references, and final notes.
-- Media galleries still do not have real still-image sets or thumbnails.
-- Legacy files from the older build still exist and have not been cleaned up yet.
+- Everything in the umbrella structure above that isn't the existing SRS wing: Frank layer, crossroads landing, Fresh Off The Grill layout, per-year posters, credibility wall, Cinema, Poddy page, Portal, Meet the Snags.
+- All the SRS content gaps from the previous roadmap still stand: temporary seed copy everywhere, inferred poster tiers, placeholder media URLs, unconfirmed venue/client metadata, inferred proof items, no real stills/thumbnails.
+- Legacy files from the pre-SRS build still not cleaned up (`app/home`, old `components/*.tsx`, old `content/*.json`) — though `team.json`/`Collective.tsx` are now candidates for reuse in Meet the Snags.
+- Roadmap docs in `docs/` not yet updated to umbrella direction.
 
 ## Highest-Impact Next Step
 
-Replace the inferred seed content with real production content in this order:
-
-1. Real homepage/about/services copy in `content/srs/site.ts`
-2. Real artist metadata in `content/srs/batches/artists.batch.ts`
-3. Real project/event records in `content/srs/batches/projects.batch.ts`
-4. Confirmed venue metadata in `content/srs/batches/venues.batch.ts`
-5. Confirmed client/promoter metadata in `content/srs/batches/clients.batch.ts`
-6. Real proof items in `content/srs/proof-items.ts`
-
-This gives the fastest visible progress because it activates:
-
-- the homepage
-- the lineup page
-- artist archive pages
-- event detail pages
-- the social proof feed
-
-all at once from real data.
+Phase 1, item by item — start with restructuring the landing page into Frank's crossroads + Fresh Off The Grill (establishes the umbrella skeleton), then the per-year lineup posters and credibility wall, in parallel with the real-content pass from the previous roadmap (that content order is unchanged: site copy → artists → projects → venues → clients → proof items).
 
 ## Needed From User
 
-### Homepage Copy
+Everything in the previous roadmap's content list still applies (homepage copy, services, artists, projects/events, venues, clients, media assets, proof items). New additions:
 
-- final `home.eyebrow`
-- final `home.headline`
-- final `home.subheadline`
-- final `home.proofLine`
-- final CTA labels if changing
-- final about intro and story
-
-### Services
-
-- final service list
-- final service summaries
-- final deliverables per service
-
-### Artists
-
-- real artist names
-- slugs if you want custom ones
-- poster hierarchy: `headliner`, `featured`, `support`
-- location
-- genres
-- short archive summary per artist
-
-### Projects / Events
-
-- event name
-- slug
-- date
-- linked artist slug(s)
-- venue slug
-- client/promoter slug
-- service slug(s)
-- short summary
-- deliverables
-- published flag
-- real media links instead of temporary example URLs
-
-### Venues
-
-- venue name
-- slug
-- city
-- state
-
-### Clients / Promoters
-
-- name
-- slug
-- kind: `promoter`, `club`, `festival`, `artist`, or `brand`
-- website if relevant
-
-### Media Assets
-
-- thumbnail path or asset
-- gallery images
-- embed URLs
-- alt text or enough context to write it cleanly
-
-### Social Proof / Feed Items
-
-- post URL
-- who uploaded it
-- platform
-- post type: `carousel`, `reel`, `recap`, or `tour-post`
-- linked project slug
-- linked artist slug
-- short proof note
-- exact slide / clip / frame note if relevant
-- thumbnail or preview still if available
+- **Frank:** dialogue voice/tone samples; crossroads options wording; whether anyone in the trio draws pixel art or if the sprite set is a commission.
+- **Per-year lineups:** which artists belong to which year(s), and per-year tier/size calls.
+- **Credibility wall:** which client/venue/brand names and logos are cleared to display.
+- **Cinema:** series list, episode lists with platform links, preferred watch order.
+- **Poddy:** name/branding confirmation, hiatus copy, any existing episodes to link.
+- **Portal:** storyline content when ready; store platform decision when rewards become real.
+- **Meet the Snags:** names/roles/bios/photos (or pixel portraits) for the three of you.
 
 ## Files To Reopen First Next Session
 
 - `ROADMAP.md`
-- `docs/sizzle-reel-rebuild-plan.md`
-- `docs/content-population-checklist.md`
-- `content/srs/development-seed.ts`
+- `app/(site)/page.tsx` (becomes Frank's crossroads + Fresh Off The Grill)
+- `app/(site)/layout.tsx` (Frank lives in the shell)
 - `content/srs/site.ts`
-- `content/srs/batches/artists.batch.ts`
-- `content/srs/batches/projects.batch.ts`
-- `content/srs/batches/venues.batch.ts`
-- `content/srs/batches/clients.batch.ts`
 - `content/srs/proof-items.ts`
 - `lib/srs/data.ts`
-- `components/site/ProofFeed.tsx`
+- `docs/sizzle-reel-rebuild-plan.md` (needs umbrella-direction update)
 
 ## Resume State
 
-If resuming later, the project should be treated like this:
+If resuming later, treat the project like this:
 
-- architecture is locked
-- do not redesign the route structure
-- do not collapse the lineup/archive/detail system
-- continue by replacing temporary development-seed content with real production data
-- keep the proof feed as a linked proof layer, not a separate portfolio system
-- keep using the current typed batch-content workflow
+- Direction: SZL umbrella site with the SRS videography wing inside it — this supersedes the old "SRS-only, architecture locked" framing.
+- The `/our-work` lineup/archive/detail system and the typed batch-content workflow remain locked — do not redesign or collapse them.
+- The weird stays ambient on the business path, concentrated in its own wings.
+- Phase 1 (videography wing done-done, crossroads landing, Fresh Off The Grill) ships before phase 2 (Snags, Cinema, Portal).
+- Frank is a persistent shell layer, prototyped with a placeholder sprite — don't block on final art.
 
 ## Resume Phrase
 
@@ -252,7 +134,7 @@ That should be treated as:
 - use it as the source of truth for current project state
 - continue from the highest-impact next step
 - reopen the listed files before making new changes
-- keep the architecture locked unless the user explicitly changes direction
+- keep the locked systems locked unless the user explicitly changes direction
 
 ## Handoff Phrase
 
@@ -270,7 +152,5 @@ That means:
 
 ## Verification Status
 
-Latest checked during this session:
-
-- `npm run build` passed
-- latest content/proof-feed commit on `main` before this handoff: `c938088`
+- No code changes this session (concept/direction session); `npm run build` last verified passing at commit `c938088`.
+- Mockup reference: user's six-screen sketch shared in-session (2026-07-21).
