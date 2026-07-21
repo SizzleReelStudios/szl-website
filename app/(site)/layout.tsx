@@ -1,4 +1,5 @@
 import type { ReactNode } from "react";
+import Frank from "@/components/site/Frank";
 import SiteFooter from "@/components/site/SiteFooter";
 import SiteHeader from "@/components/site/SiteHeader";
 
@@ -9,6 +10,7 @@ export default function SiteLayout({ children }: { children: ReactNode }) {
       <SiteHeader />
       <div className="relative z-10">{children}</div>
       <SiteFooter />
+      <Frank />
     </div>
   );
 }

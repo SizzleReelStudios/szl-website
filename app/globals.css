@@ -112,11 +112,6 @@ html {
   color: #fff;
 }
 
-.site-frame {
-  position: relative;
-  isolation: isolate;
-}
-
 .font-display {
   font-family: var(--font-display), sans-serif;
 }
@@ -154,14 +149,6 @@ body::before {
   background-size: 200px 200px;
 }
 
-.floating-panel {
-  animation: float-panel 9s ease-in-out infinite;
-}
-
-.floating-panel--delay {
-  animation-delay: 1.8s;
-}
-
 .archive-card {
   transition:
     transform 220ms ease,
@@ -172,18 +159,6 @@ body::before {
 .archive-card:hover {
   transform: translateY(-6px) rotate(-0.4deg);
   border-color: rgba(255, 255, 255, 0.22);
-}
-
-.marquee-shell {
-  overflow: hidden;
-}
-
-.marquee-track {
-  display: flex;
-  width: max-content;
-  gap: 2rem;
-  white-space: nowrap;
-  animation: marquee-move 22s linear infinite;
 }
 
 .proof-marquee {
@@ -209,43 +184,68 @@ body::before {
   backdrop-filter: blur(10px);
 }
 
-.orbit-chip {
-  position: absolute;
+/* Frank, the pixel mascot */
+.pixel-art {
+  image-rendering: pixelated;
 }
 
-.orbit-chip-1 {
-  top: 18%;
-  left: 54%;
+.frank-bob {
+  animation: frank-bob 1.6s steps(2, end) infinite;
 }
 
-.orbit-chip-2 {
-  right: 12%;
-  top: 50%;
+.frank-lid {
+  opacity: 0;
+  animation: frank-lid 4.4s steps(1, end) infinite;
 }
 
-.orbit-chip-3 {
-  bottom: 16%;
-  left: 18%;
+.frank-pop {
+  animation: frank-pop 0.24s steps(3, end);
+  transform-origin: bottom right;
 }
 
-@keyframes float-panel {
+.frank-enter {
+  animation: frank-pop 0.3s steps(3, end) both;
+  animation-delay: 0.7s;
+  transform-origin: bottom right;
+}
+
+@keyframes frank-bob {
   0%,
   100% {
-    transform: translateY(0px);
+    transform: translateY(0);
   }
 
   50% {
-    transform: translateY(-8px);
+    transform: translateY(-3px);
   }
 }
 
-@keyframes marquee-move {
+@keyframes frank-lid {
+  0%,
+  90% {
+    opacity: 0;
+  }
+
+  91%,
+  96% {
+    opacity: 1;
+  }
+
+  97%,
+  100% {
+    opacity: 0;
+  }
+}
+
+@keyframes frank-pop {
   0% {
-    transform: translateX(0);
+    opacity: 0;
+    transform: scale(0.85);
   }
 
   100% {
-    transform: translateX(-50%);
+    opacity: 1;
+    transform: scale(1);
   }
 }
 

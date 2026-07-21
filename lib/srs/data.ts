@@ -1,16 +1,19 @@
 import { artists } from "@/content/srs/artists";
 import { clients } from "@/content/srs/clients";
 import { developmentSeedAudit } from "@/content/srs/development-seed";
+import { lineupOverrides } from "@/content/srs/lineups";
 import { proofItems } from "@/content/srs/proof-items";
 import { projects } from "@/content/srs/projects";
 import { services, siteConfig } from "@/content/srs/site";
 import { venues } from "@/content/srs/venues";
 import type {
   ArtistLineupEntry,
+  LineupPosterEntry,
   Project,
   ProofItem,
   ResolvedProofItem,
   ResolvedProject,
+  YearLineup,
 } from "@/lib/srs/types";
 
 export function getSiteConfig() {
@@ -63,6 +66,14 @@ export function getProjectByArtistAndSlug(artistSlug: string, projectSlug: strin
   );
 }
 
+export function getClients() {
+  return clients;
+}
+
+export function getVenues() {
+  return venues;
+}
+
 export function getVenueBySlug(slug: string) {
   return venues.find((venue) => venue.slug === slug);
 }
@@ -101,11 +112,6 @@ export function resolveProofItem(item: ProofItem): ResolvedProofItem {
 }
 
 export function getArtistLineup() {
-  const tierRank = {
-    headliner: 0,
-    featured: 1,
-    support: 2,
-  } as const;
   const counts = new Map<string, number>();
 
   for (const project of getProjects()) {
@@ -134,6 +140,89 @@ export function getArtistLineup() {
 
       return a.name.localeCompare(b.name);
     });
+}
+
+function getProjectYear(project: Project): number | null {
+  const year = Number.parseInt(project.date.slice(0, 4), 10);
+  return Number.isNaN(year) ? null : year;
+}
+
+const tierRank = {
+  headliner: 0,
+  featured: 1,
+  support: 2,
+} as const;
+
+export function getLineupYears(): number[] {
+  const years = new Set<number>();
+
+  for (const project of getProjects()) {
+    const year = getProjectYear(project);
+    if (year !== null) {
+      years.add(year);
+    }
+  }
+
+  for (const appearances of Object.values(lineupOverrides)) {
+    for (const appearance of appearances) {
+      years.add(appearance.year);
+    }
+  }
+
+  return [...years].sort((a, b) => b - a);
+}
+
+export function getArtistLineupByYear(year: number): LineupPosterEntry[] {
+  const yearProjectCounts = new Map<string, number>();
+
+  for (const project of getProjects()) {
+    if (getProjectYear(project) !== year) {
+      continue;
+    }
+    for (const artistSlug of project.artistSlugs) {
+      yearProjectCounts.set(artistSlug, (yearProjectCounts.get(artistSlug) ?? 0) + 1);
+    }
+  }
+
+  return artists
+    .map((artist): LineupPosterEntry | null => {
+      const override = lineupOverrides[artist.slug]?.find(
+        (appearance) => appearance.year === year,
+      );
+      const projectCount = yearProjectCounts.get(artist.slug) ?? 0;
+
+      if (!override && projectCount === 0) {
+        return null;
+      }
+
+      return {
+        ...artist,
+        posterTier: override?.tier ?? artist.posterTier,
+        scale: override?.scale ?? 1,
+        projectCount,
+      };
+    })
+    .filter((entry) => entry !== null)
+    .sort((a, b) => {
+      const tierDifference = tierRank[a.posterTier] - tierRank[b.posterTier];
+
+      if (tierDifference !== 0) {
+        return tierDifference;
+      }
+
+      if (b.projectCount !== a.projectCount) {
+        return b.projectCount - a.projectCount;
+      }
+
+      return a.name.localeCompare(b.name);
+    });
+}
+
+export function getYearLineups(): YearLineup[] {
+  return getLineupYears().map((year) => ({
+    year,
+    artists: getArtistLineupByYear(year),
+  }));
 }
 
 export function getArtistArchiveSummary(artistSlug: string) {

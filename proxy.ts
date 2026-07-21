@@ -21,6 +21,9 @@ export function proxy(request: NextRequest) {
     "/services",
     "/contact",
     "/our-work",
+    "/cinema",
+    "/poddy",
+    "/snags",
   ];
 
   const shouldGate =
@@ -35,5 +38,5 @@ export function proxy(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ["/", "/preview", "/home/:path*", "/about/:path*", "/services/:path*", "/contact/:path*", "/our-work/:path*"],
+  matcher: ["/", "/preview", "/home/:path*", "/about/:path*", "/services/:path*", "/contact/:path*", "/our-work/:path*", "/cinema/:path*", "/poddy/:path*", "/snags/:path*"],
 };

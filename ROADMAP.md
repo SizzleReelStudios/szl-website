@@ -1,6 +1,6 @@
 # SZL Website Roadmap
 
-Last updated: 2026-07-21
+Last updated: 2026-07-21 (end of session — Phase 1 skeleton built)
 
 ## Direction Change (2026-07-21)
 
@@ -74,21 +74,28 @@ Rule: the weird is *ambient* on the business path (seasoning — Frank comments,
 
 ## Current State
 
-### Done
+### Done (this session)
 
 - SRS route architecture, global shell, preview gating, lineup/archive/detail system, scalable content schema, proof feed — all in place and rendering against development seed data.
-- Concept/mockup pass for the umbrella direction (six sketched screens: enter screen, Fresh Off The Grill, per-year lineup, the Portal, the Cinema, Meet the Snags) — discussed and mapped to architecture in this session.
+- **Frank v1 (placeholder art):** `components/site/Frank.tsx` — persistent corner companion in the `(site)` layout. Owns the crossroads: pops into the corner on the homepage, asks "what are you doing here?" with four options in his bubble; replies stay with him in the corner through navigation (reply lingers ~4s after arrival, then contextual per-page lines). Page-aware lines, intent memory, dismiss/recall ("shoo, frank" / "frank?"), all persisted via localStorage using `useSyncExternalStore`. Placeholder 16×16 sprite drawn in code with blink/bob; real pixel art drops in later. User direction: leave Frank development here for now — revisit later.
+- **Homepage restructured:** full-width umbrella hero (temporary copy, TODO-marked) + Fresh Off The Grill + SRS wing band with poster teaser + "rest of the house" wing directory (Cinema/Poddy/Snags cards, sealed Portal card) + contact.
+- **Fresh Off The Grill:** `components/site/FreshOffTheGrill.tsx` — newspaper front page over proof items (masthead, lead story, two secondary, three clippings).
+- **Per-year lineup editions:** year membership derived from published project dates; per-year tier/scale overrides in `content/srs/batches/lineups.batch.ts` (merged in `content/srs/lineups.ts`); helpers `getLineupYears` / `getArtistLineupByYear` / `getYearLineups` in `lib/srs/data.ts`; `LineupEditions` client component with year-tab switcher. `/our-work` shows the poster full screen-width, centre-aligned like a real festival poster, with info scrolling below it (user-requested layout). NOTE: the batch file currently contains a demo-only 2024 edition (taiga featured @1.15 scale, macky-gee + disrupta support) so the switcher is visible — delete when real year calls land.
+- **Credibility wall:** `components/site/CredibilityWall.tsx` on `/our-work` — clients/promoters (with kind) and venues (with city), sorted by attached project count.
+- **Wing stubs shipped:** `/cinema` (three planned series cards), `/poddy` (on-ice notice + pointer to video work), `/snags` (team statement + three placeholder member frames). Nav and preview-gate proxy cover all new routes.
+- **Legacy cleanup:** deleted 8 pre-SRS components (Hero, Work, Services, About, Contact, Nav, Collective, HomeExperience), 4 legacy JSON content files, and their orphaned CSS. Kept `RDCanvas.tsx` (used by `/preview`, base for flames upgrade) and the `/home` → `/` redirect. Old `team.json` statement preserved on `/snags`.
 
 ### Not Done
 
-- Everything in the umbrella structure above that isn't the existing SRS wing: Frank layer, crossroads landing, Fresh Off The Grill layout, per-year posters, credibility wall, Cinema, Poddy page, Portal, Meet the Snags.
-- All the SRS content gaps from the previous roadmap still stand: temporary seed copy everywhere, inferred poster tiers, placeholder media URLs, unconfirmed venue/client metadata, inferred proof items, no real stills/thumbnails.
-- Legacy files from the pre-SRS build still not cleaned up (`app/home`, old `components/*.tsx`, old `content/*.json`) — though `team.json`/`Collective.tsx` are now candidates for reuse in Meet the Snags.
+- Frank final design + real sprite set (parked by user choice); eerie-Frank pipeline; Frank dialogue rewrite in the trio's voice.
+- Enter-screen flames/showreel upgrade (parked until real showreel footage exists).
+- Cinema interior (series/episode content model + timeline UI), Portal (everything), Poddy real content, Snags real members.
+- All SRS content gaps: temporary seed copy everywhere, inferred poster tiers, placeholder media URLs, unconfirmed venue/client metadata, inferred proof items, no real stills/thumbnails, no cleared-for-display confirmation on client/venue names, no logos.
 - Roadmap docs in `docs/` not yet updated to umbrella direction.
 
 ## Highest-Impact Next Step
 
-Phase 1, item by item — start with restructuring the landing page into Frank's crossroads + Fresh Off The Grill (establishes the umbrella skeleton), then the per-year lineup posters and credibility wall, in parallel with the real-content pass from the previous roadmap (that content order is unchanged: site copy → artists → projects → venues → clients → proof items).
+The Phase 1 structural skeleton is built. The project is now **content-blocked**: the highest-impact next step is the real-content pass (order unchanged: site copy → artists (with per-year tier/scale calls) → projects → venues → clients → proof items), which simultaneously activates the homepage, Fresh Off The Grill, the year editions, the credibility wall, and the archive pages. First structural work after that: swap the demo 2024 lineup batch for real year calls, then Cinema series/episode model (Phase 2).
 
 ## Needed From User
 
@@ -105,11 +112,13 @@ Everything in the previous roadmap's content list still applies (homepage copy, 
 ## Files To Reopen First Next Session
 
 - `ROADMAP.md`
-- `app/(site)/page.tsx` (becomes Frank's crossroads + Fresh Off The Grill)
-- `app/(site)/layout.tsx` (Frank lives in the shell)
+- `content/srs/batches/lineups.batch.ts` (demo 2024 batch to replace with real year calls)
+- `content/srs/batches/artists.batch.ts`
+- `content/srs/batches/projects.batch.ts`
 - `content/srs/site.ts`
 - `content/srs/proof-items.ts`
 - `lib/srs/data.ts`
+- `components/site/Frank.tsx` (when Frank development resumes)
 - `docs/sizzle-reel-rebuild-plan.md` (needs umbrella-direction update)
 
 ## Resume State
@@ -152,5 +161,6 @@ That means:
 
 ## Verification Status
 
-- No code changes this session (concept/direction session); `npm run build` last verified passing at commit `c938088`.
+- `npm run build` and `npm run lint` passing at end of session (2 remaining lint warnings, both in the intentionally-kept `RDCanvas.tsx`).
+- Layout feedback verified against user's browser screenshots/PDF: Frank corner behaviour and full-width poster layout confirmed as requested.
 - Mockup reference: user's six-screen sketch shared in-session (2026-07-21).

@@ -117,6 +117,23 @@ export type ArtistLineupEntry = Artist & {
   projectCount: number;
 };
 
+// One artist's slot on a specific year's lineup poster. `scale` is an
+// art-direction nudge multiplied onto the tier's base size (1 = default).
+export type LineupAppearance = {
+  year: number;
+  tier: PosterTier;
+  scale?: number;
+};
+
+export type LineupPosterEntry = ArtistLineupEntry & {
+  scale: number;
+};
+
+export type YearLineup = {
+  year: number;
+  artists: LineupPosterEntry[];
+};
+
 export type ResolvedProject = Project & {
   artists: Artist[];
   venue: Venue | null;
