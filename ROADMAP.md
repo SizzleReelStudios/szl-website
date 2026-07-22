@@ -1,6 +1,6 @@
 # SZL Website Roadmap
 
-Last updated: 2026-07-21 (end of session — Phase 1 skeleton built)
+Last updated: 2026-07-22 (end of session — Phase 1 skeleton + docs + cinema scaffold)
 
 ## Direction Change (2026-07-21)
 
@@ -84,18 +84,20 @@ Rule: the weird is *ambient* on the business path (seasoning — Frank comments,
 - **Credibility wall:** `components/site/CredibilityWall.tsx` on `/our-work` — clients/promoters (with kind) and venues (with city), sorted by attached project count.
 - **Wing stubs shipped:** `/cinema` (three planned series cards), `/poddy` (on-ice notice + pointer to video work), `/snags` (team statement + three placeholder member frames). Nav and preview-gate proxy cover all new routes.
 - **Legacy cleanup:** deleted 8 pre-SRS components (Hero, Work, Services, About, Contact, Nav, Collective, HomeExperience), 4 legacy JSON content files, and their orphaned CSS. Kept `RDCanvas.tsx` (used by `/preview`, base for flames upgrade) and the `/home` → `/` redirect. Old `team.json` statement preserved on `/snags`.
+- **Docs updated to umbrella direction:** `docs/sizzle-reel-rebuild-plan.md` rewritten as the "SZL Umbrella Site Plan" (stable architectural reference; `ROADMAP.md` stays the live state source). `docs/content-population-checklist.md` rewritten as a fillable **Content Workbook** — eight impact-ordered sections with blank prompts the trio can answer in any format (copy, artists + year/tier calls, events, venues/clients + display-clearance question, proof items, services, cinema episodes, Snags/Poddy/Frank). Old duplicated schemas removed; typed batch files are the single source of truth.
+- **Cinema scaffolded (Phase 2 item 1):** `Series`/`Episode` types in `lib/srs/types.ts`; batches `content/srs/batches/series.batch.ts` + `episodes.batch.ts` merged via `content/srs/cinema.ts`; helpers `getSeriesList` / `getSeriesBySlug` / `getEpisodesBySeriesSlug` / `getSeriesWithEpisodes` in `lib/srs/data.ts`. `/cinema` lobby renders the three sketched series as screen cards with status labels and episode counts; `/cinema/[seriesSlug]` (SSG) renders the numbered episode timeline with YouTube-preferred embeds, "screen's dark" placeholders, and watch-on-platform outbound links. SZL Vlogs carries two TODO-marked seed episodes so the timeline is visible; delete when real episode lists land.
 
 ### Not Done
 
 - Frank final design + real sprite set (parked by user choice); eerie-Frank pipeline; Frank dialogue rewrite in the trio's voice.
 - Enter-screen flames/showreel upgrade (parked until real showreel footage exists).
-- Cinema interior (series/episode content model + timeline UI), Portal (everything), Poddy real content, Snags real members.
-- All SRS content gaps: temporary seed copy everywhere, inferred poster tiers, placeholder media URLs, unconfirmed venue/client metadata, inferred proof items, no real stills/thumbnails, no cleared-for-display confirmation on client/venue names, no logos.
-- Roadmap docs in `docs/` not yet updated to umbrella direction.
+- Portal (everything), Poddy real content, Snags real members.
+- Cinema real content: actual series statuses, episode lists in watch order, YouTube/IG/TikTok links, thumbnails. Structure is done; the seed episodes in `episodes.batch.ts` are placeholders.
+- All SRS content gaps: temporary seed copy everywhere, inferred poster tiers, placeholder media URLs, unconfirmed venue/client metadata, inferred proof items, no real stills/thumbnails, no cleared-for-display confirmation on client/venue names, no logos. **The Content Workbook (`docs/content-population-checklist.md`) is the intake form for all of this — hand it to the trio.**
 
 ## Highest-Impact Next Step
 
-The Phase 1 structural skeleton is built. The project is now **content-blocked**: the highest-impact next step is the real-content pass (order unchanged: site copy → artists (with per-year tier/scale calls) → projects → venues → clients → proof items), which simultaneously activates the homepage, Fresh Off The Grill, the year editions, the credibility wall, and the archive pages. First structural work after that: swap the demo 2024 lineup batch for real year calls, then Cinema series/episode model (Phase 2).
+The Phase 1 skeleton, umbrella docs, and Cinema scaffold are all built. The project is now **fully content-blocked**: the highest-impact next step is the trio filling in the Content Workbook (`docs/content-population-checklist.md`), sections 1→5 first (copy → artists + year calls → projects → venues/clients + clearances → proof items), which activates the entire commercial path at once. Cinema episode lists (workbook section 7) light up the timeline pages the same way. Remaining structural work is Phase 2 only: Poddy shelf, Snags real page, Portal, and the parked Frank/enter-screen items.
 
 ## Needed From User
 
@@ -112,14 +114,15 @@ Everything in the previous roadmap's content list still applies (homepage copy, 
 ## Files To Reopen First Next Session
 
 - `ROADMAP.md`
+- `docs/content-population-checklist.md` (the Content Workbook — ingest the trio's answers from here)
 - `content/srs/batches/lineups.batch.ts` (demo 2024 batch to replace with real year calls)
 - `content/srs/batches/artists.batch.ts`
 - `content/srs/batches/projects.batch.ts`
+- `content/srs/batches/series.batch.ts` + `episodes.batch.ts` (seed episodes to replace)
 - `content/srs/site.ts`
 - `content/srs/proof-items.ts`
 - `lib/srs/data.ts`
 - `components/site/Frank.tsx` (when Frank development resumes)
-- `docs/sizzle-reel-rebuild-plan.md` (needs umbrella-direction update)
 
 ## Resume State
 
@@ -161,6 +164,6 @@ That means:
 
 ## Verification Status
 
-- `npm run build` and `npm run lint` passing at end of session (2 remaining lint warnings, both in the intentionally-kept `RDCanvas.tsx`).
+- `npm run build` and `npm run lint` passing at end of session (2 remaining lint warnings, both in the intentionally-kept `RDCanvas.tsx`). Cinema SSG routes confirmed in build output (`/cinema/stanleys-playground`, `/cinema/killing-of-the-clones`, `/cinema/szl-vlogs`).
 - Layout feedback verified against user's browser screenshots/PDF: Frank corner behaviour and full-width poster layout confirmed as requested.
 - Mockup reference: user's six-screen sketch shared in-session (2026-07-21).

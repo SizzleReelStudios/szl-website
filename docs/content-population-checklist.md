@@ -1,288 +1,144 @@
-# Content Population Checklist
+# Content Workbook
 
-Last updated: 2026-04-21
+Last updated: 2026-07-21
 
-This checklist is designed for the current Sizzle Reel Studios data structure. It is written to let you send content in batches without changing routing logic.
+This is the intake form for turning the seed site into the real one. **Answers
+in any format are fine** — dot points, a text message, a voice-memo transcript,
+a screenshot of your notes app. Formatting it into code is Claude's job, not
+yours. Fill in what you can, skip what you can't, send it in batches.
 
-## HOMEPAGE COPY
+Sections are ordered by impact: each completed section visibly upgrades the
+site the moment it lands.
 
-### Required fields
+---
 
-- `home.eyebrow`
-- `home.headline`
-- `home.subheadline`
-- `home.proofLine`
-- `home.ctaPrimary`
-- `home.ctaSecondary`
-- `about.intro`
-- `about.story`
-- `contact.email`
-- `contact.instagram`
+## 1. Homepage + About copy (makes the site feel real immediately)
 
-### Optional fields
+Fill in (or say "keep what's there" / "you draft it, we'll edit"):
 
-- `seo.title`
-- `seo.description`
-- `brand.shortName`
-- `brand.location`
+- Hero headline: `____` (current placeholder: "One house. All the sizzle.")
+- Hero subhead (1–2 sentences): `____`
+- Proof line (one punchy credibility sentence): `____`
+- Primary CTA label: `____` (current: from seed)
+- Secondary CTA label: `____`
+- About intro (2–3 sentences): `____`
+- About story (a paragraph): `____`
+- Contact email to display: `____`
+- Instagram URL: `____`
 
-### Example format
-
-```ts
-home: {
-  eyebrow: "Perth nightlife production",
-  headline: "Video that keeps the weight of the room.",
-  subheadline:
-    "We shoot DJs, artists, promoters, clubs, and festivals without sanding off the energy that made the night worth filming.",
-  proofLine:
-    "Built for lineups, club rooms, artist rollouts, aftermovies, and fast-turn social edits.",
-  ctaPrimary: "View The Lineup",
-  ctaSecondary: "Start An Enquiry",
-}
-```
+→ Goes into `content/srs/site.ts`
 
-### Maps to
+## 2. Artists + year calls (makes the lineup credible immediately)
 
-- [content/srs/site.ts](/Users/home/projects/szl-website/content/srs/site.ts:1)
-
-## SERVICES
-
-### Required fields
-
-- `id`
-- `slug`
-- `name`
-- `summary`
-- `deliverables`
-
-### Optional fields
-
-- none in the current model
-
-### Example format
-
-```ts
-{
-  id: "event-coverage",
-  slug: "event-coverage",
-  name: "Event Coverage",
-  summary: "Full-night coverage built for recaps, promos, and social cutdowns.",
-  deliverables: ["aftermovies", "recaps", "vertical edits", "photo grabs"],
-}
-```
-
-### Maps to
-
-- [content/srs/site.ts](/Users/home/projects/szl-website/content/srs/site.ts:37)
-
-## ARTISTS
-
-### Required fields
-
-- `id`
-- `slug`
-- `name`
-- `posterTier`
-- `location`
-- `genres`
-- `summary`
-- `status`
-
-### Optional fields
-
-- none in the current model
-
-### Example format
-
-```ts
-{
-  id: "macky-gee",
-  slug: "macky-gee",
-  name: "Macky Gee",
-  posterTier: "headliner",
-  location: "UK",
-  genres: ["Drum and Bass"],
-  summary: "High-impact drum and bass act with filmed appearances across Perth shows.",
-  status: "published",
-}
-```
-
-### Maps to
-
-- [content/srs/batches/artists.batch.ts](/Users/home/projects/szl-website/content/srs/batches/artists.batch.ts:1)
-- consumed by [content/srs/artists.ts](/Users/home/projects/szl-website/content/srs/artists.ts:1)
-
-## PROJECTS / EVENTS
-
-### Required fields
-
-- `id`
-- `slug`
-- `artistSlugs`
-- `eventName`
-- `title`
-- `date`
-- `venueSlug`
-- `clientSlug`
-- `serviceSlugs`
-- `summary`
-- `deliverables`
-- `gallery`
-- `published`
-
-### Optional fields
-
-- `thumbnail`
-- `embedUrl`
-
-### Example format
-
-```ts
-{
-  id: "macky-gee-villa-2025",
-  slug: "villa-appearance-2025",
-  artistSlugs: ["macky-gee"],
-  eventName: "Macky Gee at Villa",
-  title: "Macky Gee at Villa",
-  date: "2025-02-14",
-  venueSlug: "villa-perth",
-  clientSlug: "villa-nightclub",
-  serviceSlugs: ["event-coverage", "artist-content"],
-  summary:
-    "Coverage built around crowd energy, headline moments, and fast-turn artist/social edits.",
-  deliverables: ["event recap", "vertical clips", "artist selects"],
-  thumbnail: "/media/projects/macky-gee-villa/thumb.jpg",
-  gallery: [
-    {
-      type: "image",
-      src: "/media/projects/macky-gee-villa/still-01.jpg",
-      alt: "Macky Gee performing at Villa",
-    },
-    {
-      type: "video-embed",
-      src: "https://www.instagram.com/reel/XXXXXXXX/",
-      alt: "Embedded event clip",
-    },
-  ],
-  embedUrl: "https://www.instagram.com/reel/XXXXXXXX/",
-  published: true,
-}
-```
-
-### Maps to
-
-- [content/srs/batches/projects.batch.ts](/Users/home/projects/szl-website/content/srs/batches/projects.batch.ts:1)
-- consumed by [content/srs/projects.ts](/Users/home/projects/szl-website/content/srs/projects.ts:1)
-
-## VENUES
-
-### Required fields
-
-- `id`
-- `slug`
-- `name`
-- `city`
-- `state`
-
-### Optional fields
-
-- none in the current model
-
-### Example format
-
-```ts
-{
-  id: "villa-perth",
-  slug: "villa-perth",
-  name: "Villa",
-  city: "Perth",
-  state: "WA",
-}
-```
-
-### Maps to
-
-- [content/srs/batches/venues.batch.ts](/Users/home/projects/szl-website/content/srs/batches/venues.batch.ts:1)
-- consumed by [content/srs/venues.ts](/Users/home/projects/szl-website/content/srs/venues.ts:1)
-
-## CLIENTS / PROMOTERS
-
-### Required fields
-
-- `id`
-- `slug`
-- `name`
-- `kind`
-
-### Optional fields
-
-- `website`
-
-### Example format
-
-```ts
-{
-  id: "villa-nightclub",
-  slug: "villa-nightclub",
-  name: "Villa Nightclub",
-  kind: "club",
-  website: "https://example.com",
-}
-```
-
-### Maps to
-
-- [content/srs/batches/clients.batch.ts](/Users/home/projects/szl-website/content/srs/batches/clients.batch.ts:1)
-- consumed by [content/srs/clients.ts](/Users/home/projects/szl-website/content/srs/clients.ts:1)
-
-## MEDIA ASSETS
-
-### Required fields
-
-- for each gallery item: `type`, `src`, `alt`
-
-### Optional fields
-
-- project-level `thumbnail`
-- project-level `embedUrl`
-- multiple gallery items per project
-
-### Example format
-
-```ts
-thumbnail: "/media/projects/macky-gee-villa/thumb.jpg",
-gallery: [
-  {
-    type: "image",
-    src: "/media/projects/macky-gee-villa/still-01.jpg",
-    alt: "Wide shot of the crowd during Macky Gee set",
-  },
-  {
-    type: "video-embed",
-    src: "https://www.instagram.com/reel/XXXXXXXX/",
-    alt: "Highlight reel from the event",
-  },
-]
-```
-
-### Maps to
-
-- embedded inside each project in [content/srs/batches/projects.batch.ts](/Users/home/projects/szl-website/content/srs/batches/projects.batch.ts:1)
-
-## Replace First For Maximum Visible Progress
-
-Replace these in this order:
-
-1. `siteConfig.home` and `siteConfig.about`
-2. the seed artist entries
-3. first 6 to 12 real project/event entries
-4. supporting venue and client records for those projects
-5. final services copy
-
-Why this order:
-
-- homepage copy makes the site feel real immediately
-- real artist names make the lineup page credible immediately
-- a first batch of project entries activates both artist archive pages and detail routes at once
-- venues/clients complete metadata rendering across the archive
-- services can be tightened once the actual work examples are visible
+For **each artist** you've filmed:
+
+- Name (exact display spelling): `____`
+- Where they're from: `____`
+- Genre(s): `____`
+- One-line summary for their archive page: `____`
+- **Which year posters they belong on, and at what size** — per year:
+  - Year: `____` · Tier: headliner / featured / support · Bigger or smaller
+    than others in that tier? (optional — this is the art-direction nudge)
+
+Notes:
+- An artist can be support in 2023 and headliner in 2025 — that growth story
+  is the point of the year editions.
+- Artists appear automatically on a year's poster if they have a logged event
+  that year; the call above overrides tier/size or adds them without an event.
+- ⚠️ There's a **demo-only 2024 edition** in `lineups.batch.ts` that gets
+  deleted the moment real calls arrive.
+
+→ Goes into `content/srs/batches/artists.batch.ts` + `lineups.batch.ts`
+
+## 3. Projects / events (activates archives + detail pages at once)
+
+For **each filmed event** (first 6–12 is plenty to start):
+
+- Event name: `____`
+- Date: `____`
+- Artist(s) on it: `____`
+- Venue: `____`
+- Who booked/ran it (promoter/client): `____`
+- What you delivered (recap, verticals, aftermovie…): `____`
+- 1–2 sentence description: `____`
+- Main clip link (YouTube/IG/TikTok): `____`
+- Stills/thumbnail available? Where: `____`
+- OK to publish? yes / no / ask-first: `____`
+
+→ Goes into `content/srs/batches/projects.batch.ts`
+
+## 4. Venues + clients (completes the credibility wall)
+
+For each **venue**: name `____` · city `____` · state `____`
+
+For each **client/promoter**: name `____` · what they are (promoter / club /
+festival / artist / brand) `____` · website (optional) `____`
+
+**Clearance call (important):** which of these names are we allowed to display
+publicly on the "Worked With" wall? Any that need asking first? Any logos you
+have as files (PNG/SVG) — the wall can swap names for logos where they exist.
+
+→ Goes into `venues.batch.ts` + `clients.batch.ts`; wall renders automatically
+
+## 5. Proof items (the receipts layer / Fresh Off The Grill)
+
+For each **real social post** where your footage appeared in someone's rollout:
+
+- Post URL: `____`
+- Whose account posted it: `____` (and are they the artist, promoter, venue…)
+- Platform: IG / TikTok / YouTube: `____`
+- Type: carousel / reel / recap / tour-post: `____`
+- Which event/artist it belongs to: `____`
+- One-line note on why it matters ("used slide 3 of their tour recap"): `____`
+- Exact slide/clip/timestamp if relevant: `____`
+
+→ Goes into `content/srs/proof-items.ts`; feeds the homepage front page and
+artist/event proof sections
+
+## 6. Services (tighten once real work is visible)
+
+- Final list of services: `____`
+- One-line summary each: `____`
+- Deliverables per service: `____`
+
+→ Goes into `content/srs/site.ts`
+
+## 7. Cinema (SIZZL3 wing)
+
+For each **series** (Stanley's Playground, Killing of the Clones, SZL Vlogs, …):
+
+- Series name + one-line description: `____`
+- Status: screening / in production / coming soon: `____`
+- **Episodes in watch order** — per episode: title `____` · date `____` ·
+  YouTube link (preferred, embeds best) `____` · IG/TikTok links (outbound)
+  `____` · one-line description `____`
+
+→ Goes into the cinema series/episode batches (Phase 2 model)
+
+## 8. Snags + Poddy + Frank
+
+**Snags** (per member): name `____` · role `____` · short bio in your voice
+`____` · photo or pixel-portrait preference `____`
+
+**Poddy:** confirm the name/branding `____` · hiatus copy in your voice (or
+"keep what's there") `____` · any existing episodes to link `____`
+
+**Frank** (parked, but collect when inspiration hits): sample lines in his
+voice `____` · crossroads option wording changes `____` · does anyone in the
+trio draw pixel art, or is the sprite set a commission? `____`
+
+---
+
+## Fastest visible progress
+
+Send sections in this order: **1 → 2 → 3 → 4 → 5**. That lights up the
+homepage, the year posters, the archives, the credibility wall, and the proof
+feed — the entire commercial path — before touching any Phase 2 wing.
+
+## Schema reference (for whoever's coding, not for you)
+
+Exact field shapes and file mappings for every entity live in the batch files
+themselves (`content/srs/batches/*.batch.ts`, `content/srs/proof-items.ts`,
+`content/srs/site.ts`) and `lib/srs/types.ts` — each batch file carries a
+commented example entry. The previous version of this doc duplicated the
+schemas here; the types are now the single source of truth.

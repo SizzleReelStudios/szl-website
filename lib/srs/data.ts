@@ -1,4 +1,5 @@
 import { artists } from "@/content/srs/artists";
+import { episodes, series } from "@/content/srs/cinema";
 import { clients } from "@/content/srs/clients";
 import { developmentSeedAudit } from "@/content/srs/development-seed";
 import { lineupOverrides } from "@/content/srs/lineups";
@@ -13,6 +14,7 @@ import type {
   ProofItem,
   ResolvedProofItem,
   ResolvedProject,
+  SeriesWithEpisodes,
   YearLineup,
 } from "@/lib/srs/types";
 
@@ -275,4 +277,31 @@ export function getRecentProofItems(limit = 6) {
 
 export function getSeedAudit() {
   return developmentSeedAudit;
+}
+
+export function getSeriesList() {
+  return [...series].sort((a, b) => a.order - b.order);
+}
+
+export function getSeriesBySlug(slug: string) {
+  return series.find((entry) => entry.slug === slug);
+}
+
+export function getEpisodesBySeriesSlug(seriesSlug: string) {
+  return episodes
+    .filter((episode) => episode.seriesSlug === seriesSlug && episode.published)
+    .sort((a, b) => a.number - b.number);
+}
+
+export function getSeriesWithEpisodes(slug: string): SeriesWithEpisodes | null {
+  const entry = getSeriesBySlug(slug);
+
+  if (!entry) {
+    return null;
+  }
+
+  return {
+    ...entry,
+    episodes: getEpisodesBySeriesSlug(slug),
+  };
 }

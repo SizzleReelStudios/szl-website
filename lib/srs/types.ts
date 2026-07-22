@@ -146,3 +146,42 @@ export type ResolvedProofItem = ProofItem & {
   project: Project | null;
   client: Client | null;
 };
+
+export type SeriesStatus = "screening" | "in-production" | "coming-soon";
+
+export type Series = {
+  id: string;
+  slug: string;
+  name: string;
+  summary: string;
+  status: SeriesStatus;
+  // Marquee order in the cinema lobby (lower = first screen).
+  order: number;
+};
+
+export type EpisodeLinks = {
+  youtube?: string;
+  instagram?: string;
+  tiktok?: string;
+};
+
+export type Episode = {
+  id: string;
+  slug: string;
+  seriesSlug: string;
+  // Watch order within the series (1 = start here).
+  number: number;
+  title: string;
+  date: string;
+  summary: string;
+  links: EpisodeLinks;
+  // YouTube embed URL preferred — it's the only platform that embeds cleanly.
+  embedUrl?: string;
+  thumbnail?: string;
+  published: boolean;
+  status: "seed" | "published";
+};
+
+export type SeriesWithEpisodes = Series & {
+  episodes: Episode[];
+};
