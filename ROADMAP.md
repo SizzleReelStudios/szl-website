@@ -70,7 +70,7 @@ Rule: the weird is *ambient* on the business path (seasoning — Frank comments,
 - The lineup/archive/detail route system under `/our-work` — do not collapse it; it becomes the videography wing's core.
 - Typed relational content model (site config, services, artists, projects/events, venues, clients/promoters) with batch files under `content/srs/batches/` and helpers in `lib/srs/data.ts`.
 - Proof feed layer: `content/srs/proof-items.ts` + `components/site/ProofFeed.tsx`.
-- Docs: `docs/sizzle-reel-rebuild-plan.md`, `docs/content-population-checklist.md` (pre-date the umbrella direction; read with that in mind).
+- Docs: `docs/sizzle-reel-rebuild-plan.md` (umbrella architectural reference), `docs/content-population-checklist.md` (the fillable Content Workbook).
 
 ## Current State
 
