@@ -1,6 +1,6 @@
 # SZL Website Roadmap
 
-Last updated: 2026-07-22 (end of session — Phase 1 skeleton + docs + cinema scaffold)
+Last updated: 2026-07-23 (end of session — Phase 1 skeleton, docs, cinema scaffold, metadata polish, Portal definition locked)
 
 ## Direction Change (2026-07-21)
 
@@ -40,6 +40,57 @@ Rule: the weird is *ambient* on the business path (seasoning — Frank comments,
 - **The Portal** — the existential/weird wing. Branching-narrative state machine (three heads, "trust one", multiple-choice storylines). Rewards (discount codes, secret merch) deferred: build the narrative engine with placeholder rewards; store integration is its own later project (store platform TBD — ask user when relevant). Can grow over time from branching story toward Myst-style point-and-click (pre-rendered/360 scenes with hotspots — looks expensive, runs cheap). Filmed-footage-as-scenes (FMV style) plays to the trio's videography skills and is bandwidth-cheap.
 - **Meet the Snags** — team page, three portrait-frame cards, roles + personality copy + links. Old `team.json` / `Collective.tsx` from the legacy build can be cannibalised. Easy early ship.
 
+### The Portal — current understanding (concept development needed before any build)
+
+Status: **deliberately not built, and not to be built yet.** The engine is cheap;
+rebuilding it after the concept shifts is not. The next Portal step is a
+concept-development session with the trio, not code.
+
+**What's settled (from the mockup + sessions on 2026-07-21):**
+
+- It's the concentrated-weird wing: existential, personality-forward, riddles
+  and storylines — the counterweight to the boring-on-purpose business path.
+- Entry concept from the sketch: three heads, "trust one" — choosing one opens
+  a branching multiple-choice storyline.
+- Rewards concept: progressing can earn discount codes for merch/SZL collective
+  apparel, possibly items not sold on the main store. Store integration is its
+  own later project; rewards stay placeholder until the platform exists.
+- Frank's fidelity-shift moment (small corner sprite → detailed rotoscoped
+  pixel art, eerie) lives in the Portal. Parked with the rest of Frank.
+- Technical shape when it is built: its own lazy-loaded world behind the sealed
+  homepage card — heavy assets never load on the main site. Growth path runs
+  branching text → 2D animated scenes → Myst-style point-and-click
+  (pre-rendered/360 scenes + hotspots), with filmed-footage-as-scenes (FMV)
+  as the trio's natural advantage.
+
+**What must be answered before building (the concept-development agenda):**
+
+1. **The fiction.** What *is* the Portal, narratively? Who/what are the three
+   heads, and what does trusting one actually mean? Is there a premise that
+   ties the riddles together, or is it an anthology of weird?
+2. **The interaction model.** Pure branching multiple-choice, or point-and-click
+   scenes from day one? This is the single biggest fork — it decides which
+   engine gets built. (Branching-first can grow into point-and-click; starting
+   over the other way is a rebuild.)
+3. **Tone ratio.** How existential/eerie vs how funny? The sketch says both;
+   the mix decides the writing voice and whether eerie-Frank is a climax or
+   ambient.
+4. **Structure & replayability.** One continuous storyline, episodes, or
+   rotating riddles? Does it remember your choices between visits? Can you
+   "finish" it, and what does finishing mean?
+5. **Reward mechanics.** Real single-use discount codes (needs store platform +
+   code generation/validation), manually-honoured codes, or non-commercial
+   rewards (secret content, titles, endings) until the store exists? And:
+   which store platform, eventually?
+6. **The door.** Where does the Portal entrance live — end-of-page, hidden,
+   in the nav? Is *finding it* part of the game?
+7. **Production reality.** What art/footage can the trio actually make for it
+   per month? The answer scopes everything above.
+
+When those answers exist (workbook notes, a voice memo, another sketch — any
+format), the build order is: narrative engine with placeholder rewards →
+eerie-Frank moment → reward/store wiring.
+
 ### Frank (the mascot layer)
 
 - Persistent layer in the site shell — survives navigation, "comes with you" across pages. Knows current page, where you came from, and what you answered at the crossroads; reacts contextually (idle comments per page, quiet in the cinema, different mood in the Portal).
@@ -61,7 +112,7 @@ Rule: the weird is *ambient* on the business path (seasoning — Frank comments,
 
 4. Meet the Snags (easy win, could even ship in phase 1).
 5. The Cinema.
-6. The Portal narrative engine, then eerie-Frank fidelity shift, then reward/store wiring.
+6. The Portal — **concept development first** (see "The Portal — current understanding" above), then narrative engine, then eerie-Frank fidelity shift, then reward/store wiring.
 
 ## Carried Forward From the SRS Build (still valid)
 
@@ -85,13 +136,16 @@ Rule: the weird is *ambient* on the business path (seasoning — Frank comments,
 - **Wing stubs shipped:** `/cinema` (three planned series cards), `/poddy` (on-ice notice + pointer to video work), `/snags` (team statement + three placeholder member frames). Nav and preview-gate proxy cover all new routes.
 - **Legacy cleanup:** deleted 8 pre-SRS components (Hero, Work, Services, About, Contact, Nav, Collective, HomeExperience), 4 legacy JSON content files, and their orphaned CSS. Kept `RDCanvas.tsx` (used by `/preview`, base for flames upgrade) and the `/home` → `/` redirect. Old `team.json` statement preserved on `/snags`.
 - **Docs updated to umbrella direction:** `docs/sizzle-reel-rebuild-plan.md` rewritten as the "SZL Umbrella Site Plan" (stable architectural reference; `ROADMAP.md` stays the live state source). `docs/content-population-checklist.md` rewritten as a fillable **Content Workbook** — eight impact-ordered sections with blank prompts the trio can answer in any format (copy, artists + year/tier calls, events, venues/clients + display-clearance question, proof items, services, cinema episodes, Snags/Poddy/Frank). Old duplicated schemas removed; typed batch files are the single source of truth.
+- **Metadata/SEO polish:** root layout has title template (`%s · SZL`), site description, and Open Graph defaults; every static page exports its own title/description; dynamic routes (artist, event, cinema series) generate theirs from data. Themed 404 at `app/not-found.tsx` ("Wrong room."). TODO left in `app/layout.tsx`: set `metadataBase` once the production domain is confirmed so OG images resolve absolutely.
+- **Portal definition locked (documented, not built):** "The Portal — current understanding" section added to this roadmap — settled points plus the seven concept-development questions the trio must answer before any engine gets built. Mirrored in the plan doc and Content Workbook section 8.
 - **Cinema scaffolded (Phase 2 item 1):** `Series`/`Episode` types in `lib/srs/types.ts`; batches `content/srs/batches/series.batch.ts` + `episodes.batch.ts` merged via `content/srs/cinema.ts`; helpers `getSeriesList` / `getSeriesBySlug` / `getEpisodesBySeriesSlug` / `getSeriesWithEpisodes` in `lib/srs/data.ts`. `/cinema` lobby renders the three sketched series as screen cards with status labels and episode counts; `/cinema/[seriesSlug]` (SSG) renders the numbered episode timeline with YouTube-preferred embeds, "screen's dark" placeholders, and watch-on-platform outbound links. SZL Vlogs carries two TODO-marked seed episodes so the timeline is visible; delete when real episode lists land.
 
 ### Not Done
 
 - Frank final design + real sprite set (parked by user choice); eerie-Frank pipeline; Frank dialogue rewrite in the trio's voice.
 - Enter-screen flames/showreel upgrade (parked until real showreel footage exists).
-- Portal (everything), Poddy real content, Snags real members.
+- Portal: concept development is the blocker, by explicit decision (2026-07-23) — no engine gets built until the trio answers the concept-development agenda in "The Portal — current understanding". Then everything.
+- Poddy real content, Snags real members.
 - Cinema real content: actual series statuses, episode lists in watch order, YouTube/IG/TikTok links, thumbnails. Structure is done; the seed episodes in `episodes.batch.ts` are placeholders.
 - All SRS content gaps: temporary seed copy everywhere, inferred poster tiers, placeholder media URLs, unconfirmed venue/client metadata, inferred proof items, no real stills/thumbnails, no cleared-for-display confirmation on client/venue names, no logos. **The Content Workbook (`docs/content-population-checklist.md`) is the intake form for all of this — hand it to the trio.**
 

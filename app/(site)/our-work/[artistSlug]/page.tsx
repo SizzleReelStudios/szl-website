@@ -9,6 +9,24 @@ export function generateStaticParams() {
   return getArtists().map((artist) => ({ artistSlug: artist.slug }));
 }
 
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ artistSlug: string }>;
+}) {
+  const { artistSlug } = await params;
+  const archive = getArtistArchiveSummary(artistSlug);
+
+  if (!archive) {
+    return {};
+  }
+
+  return {
+    title: archive.artist.name,
+    description: archive.artist.summary,
+  };
+}
+
 export default async function ArtistArchivePage({
   params,
 }: {

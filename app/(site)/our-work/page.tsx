@@ -1,8 +1,15 @@
+import type { Metadata } from "next";
 import CredibilityWall from "@/components/site/CredibilityWall";
 import LineupEditions from "@/components/site/LineupEditions";
 import PageIntro from "@/components/site/PageIntro";
 import SeedDataNotice from "@/components/site/SeedDataNotice";
 import { getArtistLineup, getProjects, getSeedAudit, getYearLineups } from "@/lib/srs/data";
+
+export const metadata: Metadata = {
+  title: "Our Work",
+  description:
+    "The Sizzle Reel Studios lineup wall — per-year festival-poster editions of the artists we've filmed, with archives and event proof behind every name.",
+};
 
 export default function OurWorkPage() {
   const lineup = getArtistLineup();

@@ -1,5 +1,12 @@
+import type { Metadata } from "next";
 import ContactPanel from "@/components/site/ContactPanel";
 import PageIntro from "@/components/site/PageIntro";
+
+export const metadata: Metadata = {
+  title: "Contact",
+  description:
+    "Book Sizzle Reel Studios for event coverage, artist content, and social edits in Perth.",
+};
 
 export default function ContactPage() {
   return (

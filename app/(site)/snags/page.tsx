@@ -1,6 +1,13 @@
+import type { Metadata } from "next";
 import PageIntro from "@/components/site/PageIntro";
 import SeedDataNotice from "@/components/site/SeedDataNotice";
 import { FrankSprite } from "@/components/site/Frank";
+
+export const metadata: Metadata = {
+  title: "Meet The Snags",
+  description:
+    "The Perth trio behind SZL — the videography, the cinema, the poddy, and whatever the portal turns out to be.",
+};
 
 // TODO(seed): placeholder members — needs real names, roles, bios, and portraits from the trio.
 const SNAGS = [

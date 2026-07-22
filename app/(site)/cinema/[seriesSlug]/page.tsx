@@ -9,6 +9,24 @@ export function generateStaticParams() {
   return getSeriesList().map((series) => ({ seriesSlug: series.slug }));
 }
 
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ seriesSlug: string }>;
+}) {
+  const { seriesSlug } = await params;
+  const series = getSeriesWithEpisodes(seriesSlug);
+
+  if (!series) {
+    return {};
+  }
+
+  return {
+    title: `${series.name} · SIZZL3 Cinema`,
+    description: series.summary,
+  };
+}
+
 export default async function SeriesPage({
   params,
 }: {

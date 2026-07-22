@@ -1,5 +1,12 @@
+import type { Metadata } from "next";
 import PageIntro from "@/components/site/PageIntro";
 import { getServices } from "@/lib/srs/data";
+
+export const metadata: Metadata = {
+  title: "Services",
+  description:
+    "Event coverage, artist content, and fast-turn social edits for promoters, clubs, festivals, and artists in Perth.",
+};
 
 export default function ServicesPage() {
   const services = getServices();

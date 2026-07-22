@@ -1,5 +1,12 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import PageIntro from "@/components/site/PageIntro";
+
+export const metadata: Metadata = {
+  title: "The Sausage Sizzle Poddy",
+  description:
+    "The SZL podcast. Currently on ice — not dead, on ice. This page becomes the episode shelf when it returns.",
+};
 
 export default function PoddyPage() {
   return (

@@ -127,6 +127,11 @@ For each **series** (Stanley's Playground, Killing of the Clones, SZL Vlogs, …
 voice `____` · crossroads option wording changes `____` · does anyone in the
 trio draw pixel art, or is the sprite set a commission? `____`
 
+**Portal** (no build until the concept is developed — talk it through as a
+trio, any format): `ROADMAP.md` → "The Portal — current understanding" has the
+seven questions to answer, starting with: what IS it narratively, and is it
+multiple-choice storytelling or point-and-click scenes?
+
 ---
 
 ## Fastest visible progress

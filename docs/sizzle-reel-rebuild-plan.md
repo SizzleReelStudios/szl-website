@@ -119,7 +119,7 @@ dialogue (user decision).
 1. Cinema: series/episode content model + timeline UI (in progress)
 2. Poddy: real episode shelf when it comes off ice
 3. Snags: real names/roles/bios/portraits
-4. Portal: branching-narrative engine → eerie-Frank fidelity shift → reward/store wiring (store platform TBD)
+4. Portal: **concept development first** — see "The Portal — current understanding" in `ROADMAP.md` for what's settled and the seven questions the trio must answer before any engine gets built. Then: narrative engine → eerie-Frank fidelity shift → reward/store wiring (store platform TBD)
 
 ## 6. Session Conventions
 

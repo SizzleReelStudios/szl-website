@@ -1,6 +1,13 @@
+import type { Metadata } from "next";
 import ContactPanel from "@/components/site/ContactPanel";
 import PageIntro from "@/components/site/PageIntro";
 import { getSiteConfig } from "@/lib/srs/data";
+
+export const metadata: Metadata = {
+  title: "About",
+  description:
+    "Perth videography trio shooting nightlife, music, artist sets, clubs, and festivals from inside the room.",
+};
 
 export default function AboutPage() {
   const site = getSiteConfig();

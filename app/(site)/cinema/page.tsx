@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import PageIntro from "@/components/site/PageIntro";
 import { getEpisodesBySeriesSlug, getSeriesList } from "@/lib/srs/data";
@@ -7,6 +8,12 @@ const STATUS_LABELS: Record<SeriesStatus, string> = {
   screening: "Now screening",
   "in-production": "In production",
   "coming-soon": "Coming soon",
+};
+
+export const metadata: Metadata = {
+  title: "SIZZL3 Cinema",
+  description:
+    "The SZL screening room — our skits and web series in watch order, so you can follow the story even if you just walked in.",
 };
 
 export default function CinemaPage() {

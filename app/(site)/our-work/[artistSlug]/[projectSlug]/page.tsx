@@ -19,6 +19,24 @@ export function generateStaticParams() {
   );
 }
 
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ artistSlug: string; projectSlug: string }>;
+}) {
+  const { artistSlug, projectSlug } = await params;
+  const project = getResolvedProjectByArtistAndSlug(artistSlug, projectSlug);
+
+  if (!project) {
+    return {};
+  }
+
+  return {
+    title: project.eventName,
+    description: project.summary,
+  };
+}
+
 export default async function ProjectDetailPage({
   params,
 }: {
