@@ -2,7 +2,19 @@
 
 :root {
   --background: #000000;
-  --foreground: #ededed;
+  --foreground: #f1f1ef;
+
+  --szl-black: #000000;
+  --szl-carbon: #070707;
+  --szl-charcoal: #111111;
+  --szl-graphite: #1e1e1e;
+  --szl-grey: #777777;
+  --szl-silver: #b5b5b5;
+  --szl-white: #f1f1ef;
+  --szl-red-dark: #65090c;
+  --szl-red: #b5141b;
+  --szl-red-signal: #e31b23;
+  --szl-red-hot: #ff3038;
 }
 
 @theme inline {
@@ -12,108 +24,149 @@
   --font-display: var(--font-display);
 }
 
+html {
+  scroll-behavior: smooth;
+  background: var(--szl-black);
+}
+
 body {
-  background: #000;
+  background: var(--szl-black);
   color: var(--foreground);
   font-family: var(--font-body), sans-serif;
 }
 
-html {
-  scroll-behavior: smooth;
-}
-
-.landing-shell {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  min-height: 100vh;
-  background: #000;
-  gap: 16px;
-  position: relative;
-}
-
-.landing-panel,
-.landing-logo,
-.landing-copy,
-.preview-gate,
-.landing-instagram {
-  position: relative;
-  z-index: 1;
-}
-
-.landing-panel {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 16px;
-}
-
-.landing-kicker {
-  color: #8f8f8f;
-  font-size: 0.72rem;
-  letter-spacing: 0.34em;
-  text-transform: uppercase;
-}
-
-.landing-logo {
-  width: clamp(240px, 40vw, 480px);
-  height: auto;
-}
-
-.preview-gate {
-  width: min(220px, calc(100vw - 48px));
-}
-
-.preview-gate__input {
-  width: 100%;
-  min-height: 38px;
-  padding: 0 12px;
-  border-radius: 4px;
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  background: #ffffff;
-  color: #111;
-  text-align: center;
-  outline: none;
-}
-
-.preview-gate__input--error {
-  border-color: #d46666;
-}
-
-.preview-gate__error {
-  margin: 6px 0 0;
-  color: #d46666;
-  font-size: 0.75rem;
-  text-align: center;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-}
-
-.landing-copy {
-  color: #aaa;
-  font-size: clamp(0.85rem, 2.5vw, 1.1rem);
-  font-weight: 500;
-  letter-spacing: 0.25em;
-  text-transform: uppercase;
-  margin: 0;
-}
-
-.landing-instagram {
-  position: fixed;
-  bottom: 32px;
-  left: 50%;
-  transform: translateX(-50%);
-  color: #999;
-  transition: color 0.2s;
-}
-
-.landing-instagram:hover {
-  color: #fff;
-}
-
 .font-display {
   font-family: var(--font-display), sans-serif;
+}
+
+/*
+ * SRS V1 visual language
+ * Red is treated as illumination rather than surface paint: beams, reflected
+ * light, glows, edge light, and brief interaction energy against black/grey.
+ */
+.szl-hero-field {
+  background:
+    radial-gradient(circle at 50% 30%, rgba(227, 27, 35, 0.14), transparent 26%),
+    radial-gradient(circle at 50% 72%, rgba(101, 9, 12, 0.10), transparent 34%),
+    linear-gradient(180deg, #0d0d0d 0%, #030303 58%, #000 100%);
+}
+
+.szl-red-beam {
+  width: clamp(130px, 18vw, 290px);
+  height: min(58vh, 620px);
+  background: linear-gradient(
+    180deg,
+    rgba(255, 48, 56, 0.75) 0%,
+    rgba(227, 27, 35, 0.34) 38%,
+    rgba(181, 20, 27, 0.07) 76%,
+    transparent 100%
+  );
+  clip-path: polygon(47% 0, 53% 0, 100% 100%, 0 100%);
+  filter: blur(22px);
+  mix-blend-mode: screen;
+  opacity: 0.38;
+}
+
+.szl-red-rule {
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(181, 20, 27, 0.18) 28%,
+    rgba(255, 48, 56, 0.78) 50%,
+    rgba(181, 20, 27, 0.18) 72%,
+    transparent
+  );
+  box-shadow: 0 0 16px rgba(227, 27, 35, 0.24);
+}
+
+.szl-media-placeholder,
+.szl-showcase-placeholder,
+.szl-snag-placeholder {
+  position: relative;
+  isolation: isolate;
+  background:
+    radial-gradient(circle at 68% 20%, rgba(181, 20, 27, 0.16), transparent 24%),
+    linear-gradient(145deg, #151515 0%, #080808 52%, #020202 100%);
+}
+
+.szl-media-placeholder::before,
+.szl-showcase-placeholder::before,
+.szl-snag-placeholder::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background:
+    linear-gradient(112deg, transparent 36%, rgba(227, 27, 35, 0.08) 52%, transparent 68%),
+    radial-gradient(circle at 50% 110%, rgba(255, 48, 56, 0.12), transparent 38%);
+  opacity: 0.72;
+  transition: opacity 320ms ease, transform 520ms ease;
+}
+
+.szl-media-placeholder::after,
+.szl-showcase-placeholder::after,
+.szl-snag-placeholder::after {
+  content: "";
+  position: absolute;
+  inset: -12%;
+  pointer-events: none;
+  background: radial-gradient(circle at 50% 55%, transparent 20%, rgba(0, 0, 0, 0.76) 82%);
+}
+
+.group:hover .szl-media-placeholder::before,
+.group:hover .szl-showcase-placeholder::before,
+.group:hover .szl-snag-placeholder::before {
+  opacity: 1;
+  transform: scale(1.04);
+}
+
+.szl-media-shell {
+  transition:
+    border-color 280ms ease,
+    box-shadow 280ms ease,
+    transform 280ms ease;
+}
+
+.szl-media-shell:hover {
+  border-color: rgba(227, 27, 35, 0.30);
+  box-shadow:
+    0 0 0 1px rgba(227, 27, 35, 0.06),
+    0 22px 70px rgba(101, 9, 12, 0.14);
+}
+
+.szl-red-label {
+  color: #d98b8f;
+}
+
+.szl-link-glow {
+  transition: color 180ms ease, text-shadow 180ms ease, border-color 180ms ease, box-shadow 180ms ease;
+}
+
+.szl-link-glow:hover {
+  color: var(--szl-white);
+  border-color: rgba(227, 27, 35, 0.42);
+  text-shadow: 0 0 10px rgba(255, 48, 56, 0.48);
+  box-shadow: 0 0 22px rgba(181, 20, 27, 0.12);
+}
+
+.szl-primary-cta {
+  transition: transform 180ms ease, box-shadow 180ms ease, background-color 180ms ease;
+}
+
+.szl-primary-cta:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 0 30px rgba(227, 27, 35, 0.22);
+}
+
+.szl-worked-with {
+  transition: color 180ms ease, text-shadow 180ms ease;
+}
+
+.szl-worked-with:hover {
+  color: var(--szl-white);
+  text-shadow: 0 0 16px rgba(227, 27, 35, 0.42);
 }
 
 .site-band {
@@ -143,8 +196,8 @@ body::before {
   inset: 0;
   pointer-events: none;
   z-index: 9999;
-  opacity: 0.04;
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+  opacity: 0.045;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23filter)'/%3E%3C/svg%3E");
   background-repeat: repeat;
   background-size: 200px 200px;
 }
@@ -184,7 +237,7 @@ body::before {
   backdrop-filter: blur(10px);
 }
 
-/* Frank, the pixel mascot */
+/* Frank / future SZL components stay dormant in V1 but their utilities remain. */
 .pixel-art {
   image-rendering: pixelated;
 }
