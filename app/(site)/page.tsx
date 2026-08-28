@@ -19,23 +19,25 @@ export default function HomePage() {
       <section className="relative min-h-[92vh] overflow-hidden border-b border-white/10">
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_30%,rgba(255,120,68,0.22),transparent_30%),linear-gradient(180deg,#121212_0%,#050505_70%)]" />
         <div className="absolute inset-0 opacity-50 [background-image:linear-gradient(rgba(255,255,255,0.035)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.035)_1px,transparent_1px)] [background-size:52px_52px]" />
-        <div className="relative mx-auto flex min-h-[92vh] max-w-[92rem] flex-col justify-end px-4 pb-12 pt-28 sm:px-6 sm:pb-16 lg:px-8">
-          <div className="max-w-5xl">
-            <p className="mb-5 text-[0.72rem] uppercase tracking-[0.38em] text-white/50">
-              Sizzle Reel Studios — Perth, Western Australia
+        <div className="relative mx-auto flex min-h-[92vh] max-w-[92rem] flex-col px-4 pb-10 pt-16 sm:px-6 sm:pb-12 lg:px-8">
+          <div className="flex flex-1 flex-col items-center justify-center text-center">
+            <p className="mb-5 text-[0.7rem] uppercase tracking-[0.38em] text-white/42">
+              Perth, Western Australia
             </p>
-            <h1 className="font-display text-[clamp(4.2rem,12vw,10rem)] uppercase leading-[0.82] tracking-[-0.055em] text-white">
-              Music.
-              <br />
-              Nightlife.
-              <br />
-              Film.
+            <h1 className="font-display max-w-[90rem] text-[clamp(4rem,10.8vw,9.8rem)] uppercase leading-[0.82] tracking-[-0.055em] text-white">
+              Sizzle Reel Studios
             </h1>
-            <p className="mt-7 max-w-2xl text-base leading-8 text-white/66 sm:text-lg">
+            <p className="font-display mt-7 text-[clamp(2.2rem,5vw,4.8rem)] uppercase leading-none tracking-[0.02em] text-white/82">
+              Music. Nightlife. Film.
+            </p>
+            <p className="mt-7 max-w-2xl text-[clamp(1.05rem,2vw,1.4rem)] leading-8 text-white/68">
+              The next best thing to being in the room.
+            </p>
+            <p className="mt-3 max-w-xl text-sm leading-7 text-white/42 sm:text-base">
               A three-person production team capturing artists, clubs, festivals, live sets,
               music videos, and the moments that make the room feel alive.
             </p>
-            <div className="mt-8 flex flex-wrap gap-3">
+            <div className="mt-8 flex flex-wrap justify-center gap-3">
               <Link href="#work" className="rounded-full bg-white px-5 py-3 text-[0.72rem] font-semibold uppercase tracking-[0.28em] text-black">
                 View Work
               </Link>
@@ -44,7 +46,7 @@ export default function HomePage() {
               </Link>
             </div>
           </div>
-          <div className="mt-14 flex items-end justify-between gap-6 text-[0.65rem] uppercase tracking-[0.28em] text-white/28">
+          <div className="mt-8 flex items-end justify-between gap-6 text-[0.65rem] uppercase tracking-[0.28em] text-white/28">
             <span>Showreel placeholder</span>
             <span>Scroll ↓</span>
           </div>
