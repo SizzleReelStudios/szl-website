@@ -11,8 +11,8 @@ export default function SiteHeader() {
     <header className="sticky top-0 z-50 border-b border-white/10 bg-[rgba(5,5,5,0.82)] backdrop-blur-xl">
       <div className="mx-auto flex max-w-[92rem] items-center justify-between gap-6 px-4 py-4 sm:px-6 lg:px-8">
         <Link href="/" className="flex items-baseline gap-3">
-          <span className="font-display text-[0.95rem] uppercase tracking-[0.22em] text-white">
-            Sizzle Reel Studios
+          <span className="font-display text-[0.95rem] uppercase tracking-[0.24em] text-white">
+            SRS
           </span>
           <span className="hidden text-[0.62rem] uppercase tracking-[0.22em] text-white/35 sm:inline">
             Perth, WA
