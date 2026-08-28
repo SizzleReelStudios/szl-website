@@ -12,7 +12,7 @@ export default function SiteHeader() {
       <div className="mx-auto flex max-w-[92rem] items-center justify-between gap-6 px-4 py-4 sm:px-6 lg:px-8">
         <Link href="/" className="flex items-baseline gap-3">
           <span className="font-display text-[0.95rem] uppercase tracking-[0.24em] text-white">
-            SRS
+            SZL
           </span>
           <span className="hidden text-[0.62rem] uppercase tracking-[0.22em] text-white/35 sm:inline">
             Perth, WA
