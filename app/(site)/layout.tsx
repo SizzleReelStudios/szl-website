@@ -1,16 +1,14 @@
 import type { ReactNode } from "react";
-import Frank from "@/components/site/Frank";
 import SiteFooter from "@/components/site/SiteFooter";
 import SiteHeader from "@/components/site/SiteHeader";
 
 export default function SiteLayout({ children }: { children: ReactNode }) {
   return (
-    <div className="relative min-h-screen bg-[#050505] text-[#f3ede2]">
-      <div className="pointer-events-none fixed inset-0 bg-[radial-gradient(circle_at_top,rgba(255,125,67,0.14),transparent_34%),radial-gradient(circle_at_80%_18%,rgba(255,255,255,0.07),transparent_24%)]" />
+    <div className="relative min-h-screen bg-black text-[#f1f1ef]">
+      <div className="pointer-events-none fixed inset-0 bg-[radial-gradient(circle_at_50%_-8%,rgba(181,20,27,0.10),transparent_28%),radial-gradient(circle_at_84%_22%,rgba(255,255,255,0.025),transparent_18%)]" />
       <SiteHeader />
       <div className="relative z-10">{children}</div>
       <SiteFooter />
-      <Frank />
     </div>
   );
 }
