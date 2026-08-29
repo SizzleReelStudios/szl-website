@@ -201,3 +201,13 @@ Current helper classes include:
 - `.szl-worked-with`
 
 When adding future V1 components, prefer these shared principles/tokens over introducing unrelated accent colours or one-off warm orange treatments.
+
+## Related media-delivery spec
+
+Visual direction and media-loading behaviour are deliberately connected. Real footage should supply most of the site's energy without forcing the browser to download the whole portfolio at once.
+
+For poster selection, hover-preview behaviour, streaming architecture, performance rules, and the DaVinci Resolve export presets used to prepare web media, see:
+
+[`docs/srs-web-media-delivery.md`](./srs-web-media-delivery.md)
+
+The short implementation rule is: **poster first → short silent preview on demand → adaptive stream for full playback.**
