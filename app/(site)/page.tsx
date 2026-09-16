@@ -1,4 +1,6 @@
 import Link from "next/link";
+import NamesMarquee from "@/components/NamesMarquee";
+import ProjectAccordion from "@/components/ProjectAccordion";
 import {
   featuredWork,
   recentWork,
@@ -65,6 +67,8 @@ export default function HomePage() {
         </div>
       </section>
 
+      <NamesMarquee names={workedWith} />
+
       <section id="work" className="bg-black px-4 py-20 sm:px-6 sm:py-28 lg:px-8">
         <div className="mx-auto max-w-[92rem]">
           <div className="flex flex-col gap-5 sm:flex-row sm:items-end sm:justify-between">
@@ -75,35 +79,11 @@ export default function HomePage() {
               </h2>
             </div>
             <p className="max-w-md text-sm leading-7 text-white/40">
-              V1 uses deliberate media placeholders. Real thumbnails and video loops can drop in later without changing the page structure.
+              From the front row to the final cut. Music, people and nights worth remembering.
             </p>
           </div>
 
-          <div className="mt-12 grid gap-4 md:grid-cols-2">
-            {featuredWork.map((project, index) => (
-              <article
-                key={project.title}
-                className={`szl-media-shell group relative overflow-hidden border border-white/10 bg-[#070707] ${project.format === "wide" ? "md:col-span-2" : ""}`}
-              >
-                <div className={`szl-media-placeholder relative ${project.format === "wide" ? "aspect-[16/7]" : "aspect-[16/10]"}`}>
-                  <div className="absolute inset-0 z-10 flex items-center justify-center text-[0.64rem] uppercase tracking-[0.32em] text-white/14">
-                    Video / image placeholder {String(index + 1).padStart(2, "0")}
-                  </div>
-                  <div className="absolute inset-x-0 bottom-0 z-20 bg-gradient-to-t from-black via-black/72 to-transparent p-5 sm:p-7">
-                    <div className="flex items-end justify-between gap-4">
-                      <div>
-                        <p className="szl-red-label text-[0.64rem] uppercase tracking-[0.28em]">{project.subtitle}</p>
-                        <h3 className="font-display mt-2 text-[clamp(2rem,4vw,4rem)] uppercase leading-none tracking-[-0.035em] text-[#f1f1ef]">
-                          {project.title}
-                        </h3>
-                      </div>
-                      <p className="text-[0.64rem] uppercase tracking-[0.24em] text-white/32">{project.meta}</p>
-                    </div>
-                  </div>
-                </div>
-              </article>
-            ))}
-          </div>
+          <ProjectAccordion projects={featuredWork} />
         </div>
       </section>
 
@@ -134,7 +114,7 @@ export default function HomePage() {
               Still rolling.
             </h2>
             <p className="mt-5 max-w-sm text-sm leading-7 text-white/40">
-              A simple latest-work feed so the site can stay alive without needing a full archive system yet.
+              A few of the latest shoots, sets and stories.
             </p>
           </div>
           <div className="border-t border-white/12">
@@ -146,20 +126,6 @@ export default function HomePage() {
                 </p>
                 <p className="szl-red-label text-[0.64rem] uppercase tracking-[0.24em]">{item.type}</p>
               </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      <section className="relative overflow-hidden border-y border-white/10 bg-[#050505] py-16 sm:py-20">
-        <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_22%_50%,rgba(101,9,12,0.12),transparent_30%)]" />
-        <div className="relative mx-auto max-w-[92rem] px-4 sm:px-6 lg:px-8">
-          <SectionLabel>Worked With</SectionLabel>
-          <div className="mt-8 flex flex-wrap gap-x-8 gap-y-4">
-            {workedWith.map((name) => (
-              <span key={name} className="szl-worked-with font-display text-[clamp(1.8rem,4vw,3.8rem)] uppercase leading-none tracking-[-0.03em] text-white/64">
-                {name}
-              </span>
             ))}
           </div>
         </div>

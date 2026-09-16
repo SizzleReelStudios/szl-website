@@ -28,7 +28,13 @@ export default function PreviewPage() {
           priority
         />
         <form className="preview-gate" action={action}>
+          <label htmlFor="preview-password">Preview password</label>
           <input
+            id="preview-password"
+            autoComplete="current-password"
+            required
+            aria-invalid={Boolean(state.error)}
+            aria-describedby={state.error ? "preview-error" : undefined}
             type="password"
             name="password"
             placeholder="Password"
@@ -36,7 +42,8 @@ export default function PreviewPage() {
             autoFocus
             disabled={pending}
           />
-          {state.error ? <p className="preview-gate__error">{state.error}</p> : null}
+          {state.error ? <p id="preview-error" role="alert" className="preview-gate__error">{state.error}</p> : null}
+        <button type="submit" disabled={pending}>{pending ? "Opening…" : "Enter preview"}</button>
         </form>
         <p className="landing-copy">Sizzle Reel Studios rebuild in progress.</p>
       </div>

@@ -34,8 +34,6 @@ export default function RDCanvas() {
     let cur = new Float32Array(C * R);
     let prev = new Float32Array(C * R);
 
-    let mouseX = -1;
-    let mouseY = -1;
     let mouseVel = 0;
     let lastMouseX = -1;
     let lastMouseY = -1;
@@ -52,8 +50,6 @@ export default function RDCanvas() {
 
       lastMouseX = e.clientX;
       lastMouseY = e.clientY;
-      mouseX = cx;
-      mouseY = cy;
 
       const strength = mouseVel * 0.07;
       for (let dy2 = -MOUSE_RADIUS; dy2 <= MOUSE_RADIUS; dy2++) {
@@ -138,7 +134,9 @@ export default function RDCanvas() {
   return (
     <canvas
       ref={canvasRef}
+      aria-hidden="true"
       style={{
+        pointerEvents: "none",
         position: "fixed",
         inset: 0,
         width: "100%",
