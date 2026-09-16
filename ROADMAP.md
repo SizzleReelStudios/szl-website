@@ -2,6 +2,12 @@
 
 Last updated: 2026-07-23 (end of session — Phase 1 skeleton, docs, cinema scaffold, metadata polish, Portal definition locked)
 
+## Design reference added (2026-09-16)
+
+[Triangle interaction reference](docs/triangle-interaction-reference.md) documents the observed moving-name rows and expanding image panels, plus a proposed SZL adaptation. It covers desktop states, colour reveal, mobile alternatives, accessibility, content reuse, media loading and future acceptance checks.
+
+This is documentation only, as requested. The suggested three-row marquee, project accordion and homepage placement remain proposals; no components were implemented and the pending SRS V1 homepage PR was not merged. The implementation state and priorities recorded below remain the previous handoff.
+
 ## Direction Change (2026-07-21)
 
 The previous "client-facing Sizzle Reel Studios site only" framing is superseded. The site is now the **SZL umbrella site**: one house for everything the trio does, with Sizzle Reel Studios (videography) as the commercial wing inside it.
