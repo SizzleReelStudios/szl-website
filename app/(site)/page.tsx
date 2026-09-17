@@ -1,9 +1,9 @@
 import Link from "next/link";
+import PastWork from "@/components/PastWork";
 import NamesMarquee from "@/components/NamesMarquee";
 import ProjectAccordion from "@/components/ProjectAccordion";
 import {
   featuredWork,
-  recentWork,
   showcaseItems,
   snags,
   workedWith,
@@ -84,8 +84,11 @@ export default function HomePage() {
           </div>
 
           <ProjectAccordion projects={featuredWork} />
+          <a href="#past-work" className="past-work-jump">Explore past work ↓</a>
         </div>
       </section>
+
+      <PastWork />
 
       <section className="border-y border-white/10 bg-[#030303] py-20 sm:py-24">
         <div className="mx-auto max-w-[92rem] px-4 sm:px-6 lg:px-8">
@@ -100,31 +103,6 @@ export default function HomePage() {
                     <p className="mt-1 text-[0.64rem] uppercase tracking-[0.24em] text-white/34">{item.detail}</p>
                   </div>
                 </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      <section className="bg-black px-4 py-20 sm:px-6 sm:py-28 lg:px-8">
-        <div className="mx-auto grid max-w-[92rem] gap-14 lg:grid-cols-[0.7fr_1.3fr]">
-          <div>
-            <SectionLabel>Recent Work</SectionLabel>
-            <h2 className="font-display mt-4 text-[clamp(3rem,6vw,5.5rem)] uppercase leading-[0.9] tracking-[-0.04em] text-[#f1f1ef]">
-              Still rolling.
-            </h2>
-            <p className="mt-5 max-w-sm text-sm leading-7 text-white/40">
-              A few of the latest shoots, sets and stories.
-            </p>
-          </div>
-          <div className="border-t border-white/12">
-            {recentWork.map((item) => (
-              <div key={item.title} className="group grid gap-3 border-b border-white/12 py-5 transition-colors hover:border-b-[rgba(227,27,35,0.28)] sm:grid-cols-[8rem_1fr_auto] sm:items-center">
-                <p className="text-[0.64rem] uppercase tracking-[0.25em] text-white/28">{item.date}</p>
-                <p className="font-display text-2xl uppercase tracking-[-0.02em] text-white/88 transition-[text-shadow,color] group-hover:text-white group-hover:[text-shadow:0_0_14px_rgba(227,27,35,0.22)] sm:text-3xl">
-                  {item.title}
-                </p>
-                <p className="szl-red-label text-[0.64rem] uppercase tracking-[0.24em]">{item.type}</p>
               </div>
             ))}
           </div>
