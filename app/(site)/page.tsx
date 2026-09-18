@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Brands from "@/components/Brands";
 import PastWork from "@/components/PastWork";
 import NamesMarquee from "@/components/NamesMarquee";
 import ProjectAccordion from "@/components/ProjectAccordion";
@@ -108,6 +109,8 @@ export default function HomePage() {
           </div>
         </div>
       </section>
+
+      <Brands />
 
       <section id="about" className="bg-black px-4 py-20 sm:px-6 sm:py-28 lg:px-8">
         <div className="mx-auto max-w-[92rem]">
