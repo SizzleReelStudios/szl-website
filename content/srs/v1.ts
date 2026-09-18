@@ -49,17 +49,22 @@ export const recentWork = [
 ] as const;
 
 export const workedWith = [
+  "Macky Gee",
   "Chris Lorenzo",
   "Hannah Laing",
+  "Gorgon City",
+  "Morgan Seatree",
+  "Skepta",
+  "AJ Tracey",
+  "Wilkinson",
   "Solardo",
+  "Ben Hemsley",
+  "Chris Stussy",
   "Hybrid Minds",
-  "Macky Gee",
-  "TS7",
-  "Sound Selection",
-  "Together Group",
-  "The Vault",
-  "Lucky Presents",
-  "Hard Era",
+  "Josh Baker",
+  "SVDDEN DEATH",
+  "ShockOne",
+  "MK",
 ] as const;
 
 export const snags = [

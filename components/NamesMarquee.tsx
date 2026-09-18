@@ -24,7 +24,7 @@ export default function NamesMarquee({ names }: { names: readonly string[] }) {
   return (
     <section ref={root} className="names-band" aria-labelledby="names-heading" data-paused={paused || !visible}>
       <div className="names-heading">
-        <h2 id="names-heading">Worked with</h2>
+        <h2 id="names-heading">Artists we’ve filmed</h2>
         <button type="button" aria-pressed={paused} onClick={() => setPaused(!paused)}>
           {paused ? "Resume motion" : "Pause motion"}
         </button>
