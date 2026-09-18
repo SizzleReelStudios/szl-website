@@ -45,3 +45,7 @@ An event lineup is not proof that every listed artist was filmed. A filmed artis
 - Optional short client testimonials with permission to publish
 
 The website currently has four expanding featured panels. Choose four leads from this shortlist or revise the layout to feature all five; retain remaining work in the supporting portfolio.
+
+## Confirmed exclusions
+
+- Restricted: owner explicitly confirmed SZL never worked for Restricted. Removed the placeholder project and scrolling-name entry. Do not restore without a new explicit correction from the owner.

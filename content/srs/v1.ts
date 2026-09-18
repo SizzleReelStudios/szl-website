@@ -29,12 +29,6 @@ export const featuredWork = [
     meta: "Perth",
     format: "standard",
   },
-  {
-    title: "Restricted",
-    subtitle: "Artist Content",
-    meta: "Perth",
-    format: "standard",
-  },
 ] as const;
 
 export const showcaseItems = [
@@ -61,7 +55,6 @@ export const workedWith = [
   "Hybrid Minds",
   "Macky Gee",
   "TS7",
-  "Restricted",
   "Sound Selection",
   "Together Group",
   "The Vault",
